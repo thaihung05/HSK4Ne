@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>HSK Vocab Quiz</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; }
+  #question { font-size: 28px; margin-bottom: 15px; font-weight: bold; }
+  .option {
+    padding: 12px;
+    border: 1px solid #aaa;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .option:hover { background: #f0f0f0; }
+  #result { margin-top: 15px; font-size: 20px; font-weight: bold; }
+  #next { margin-top: 20px; padding: 12px 18px; font-size: 18px; }
+</style>
+</head>
+
+<body>
+<h2>HSK Vocabulary Quiz</h2>
+
+<div id="question"></div>
+<div id="options"></div>
+<div id="result"></div>
+<button id="next" onclick="nextQ()">Next</button>
+
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"李进","俩","新闻","印象","深","比赛","熟悉","不仅","性格","孙月","王静","开玩笑","从来",
+"结婚","虽然","长","兴趣","共同","适合","幸福","乐过","妻子","生活","挺","不完的话","刚",
+"浪漫","够","缺点","接受","羡慕","爱情","年轻","月亮","星星","即使","加班","亮","感动",
+"自己","灯","其实","变老","简单","自然","原因","互相","吸引","幽默","脾气","自然","普通",
+"即使","嘴","会变","难过","总是","办法","高兴","而且","几乎","红果","脸","特别","适应","交",
+"平时","逛","短信","正好","夏","马克","习惯","进进","逛街","介绍","聚会","联系","差不多",
+"专门","毕业","麻烦","林","张元","上海","国外","飞","地铁","遇到","路游","参加","饭店",
+"迟到","放心","半","照片","段","快乐","日子","重新","回到","当然","南方","已经","知道",
+"友谊","容易","丰富","离开","无聊","讨厌","却","周围","交流","了解","兴趣","成为","理解",
+"镜子","而","当","困难","及时","陪","身边","站","帮助","紧张","信心","能力","招聘","提供",
+"小雨","决定","机会","负责","本来","应聘","材料","符合","通知","突然","住院","经过","笔试",
+"面试","比较","要求","下周","马上","专业","另外","收入","咱们","安排","同事","经理","首先",
+"正式","留","其次","诚实","改变","感觉","判断","顾客","准时","不管","与","约会","卖出",
+"不管","约会","重要","提","以为","份","完全","赚","调查","原来","计划","提前","保证","提醒",
+"乱","生意","谈","并","积累","经验","一切","急着","简单","万事开头难","按照","成功","顺利",
+"感谢","消息","按时","奖金","成绩","工资","方法","知识","不得不","真是","责任","家具","沙发",
+"打折","价格","质量","肯定","流行","选择","顺便","台","光","实在","制冷","效果","现金","邀请",
+"葡萄","艺术","广告","味道","优点","实际","考虑","保准","样子","年龄","浪费","购物","尤其",
+"受到","任何","寄","果汁","售货员","袜子","打扰","竟然","西红柿","百分之","倍","皮肤","好处",
+"长","尝","轻","方面","值得","活动","内","免费","修理","轻","支持","举行","满","其中","小说",
+"会员卡","所有","获得","情况","例如","举办","各","降低","节日","活动","鼻子","流血","用纸",
+"擦","还不习惯","气候","估计","干","感冒","咳嗽","头疼","严重","保暖","窗户","打开","空气",
+"老 样子","不要再。。。了","抽烟","动作","帅","看上去","出现问题","后悔","来不及","反对",
+"担心","健康","跳","长时间","开始","告诉","植物","远处","对着","研究","静坐","超过",
+"象。。这。。的人","起来","午饭后","附近","散散步","才是","过去","认为","指","认识到",
+"精神上的","还指","只有。。才。。","算是","真正的","教授","数字","说明","要是","没用",
+"平时","出问题","听过","一位","句","散步","前两条","理解得不深","最后一条","同意","锻炼方法",
+"既。。又","减肥","不会像。。那样。。","一家人","肚子","吃饱了","需要活动","忙了一天","交流",
+"夫妻","感情","加深感情","烦恼","跑掉了","巧克力","出国","亲戚","甜","愉快","使","变得","关于",
+"美","放松","有压力","回忆","多进一个球","发生","师傅","大使馆","堵车","距离","家晚","耐心",
+"长期","改变不了","试着","草","生命","大自然","生活中","不缺少","缺少","有心","到处","都是",
+"态度","因此","走出来","窗外","窗户","能够","科学研究","证明","往往","与。。有关","积极向上",
+"共同特点","阳光","感情变化","感到","伤心","安静下来","得到","饼干","难道","得","坚持","放弃",
+"主意","网球","国际","轻松","赢","随便","汗","通过","篇","作家","当时","可是","正确","理想",
+"勇敢","结果","失败","过程","至少","总结","取","经历","许多","区别","暂时","面对","比如",
+"橡皮","糖","低","答案","富","穷","等","由于","经济","条件","建议","职业","关键","将来","发展",
+"赚","困","礼拜天","空儿","母亲","不过","永远","方向","优秀","熟悉","翻译","确实","兴奋","拉"
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"Lǐ jìn","Liǎ","Xīnwén","Yìnxiàng","Shēn","Bǐsài","Shúxī","Bùjǐn","Xìnggé","Sūn yuè","Wáng jìng",
+"Kāiwánxiào","Cónglái","Jiéhūn","Suīrán","Zhǎng","Xìngqù","Gòngtóng","Shìhé","Xìngfú","Lèguò",
+"Qīzǐ","Shēnghuó","Tǐng","Bù wán dehuà","Gāng","Làngmàn","Gòu","Quēdiǎn","Jiēshòu","Xiànmù",
+"Àiqíng","Niánqīng","Yuèliàng","Xīngxīng","Jíshǐ","Jiābān","Liàng","Gǎndòng","Zìjǐ","Dēng","Qíshí",
+"Biàn lǎo","Jiǎndān","Zìrán","Yuányīn","Hùxiāng","Xīyǐn","Yōumò","Píqì","Zìrán","Pǔtōng","Jíshǐ",
+"Zuǐ","Huì biàn","Nánguò","Zǒng shì","Bànfǎ","Gāoxìng","Érqiě","Jīhū","Hóngguǒ","Liǎn","Tèbié",
+"Shìyìng","Jiāo","Píngshí","Guàng","Duǎnxìn","Zhènghǎo","Xià","Mǎkè","Xíguàn","Jìn jìn","Guàngjiē",
+"Jièshào","Jùhuì","Liánxì","Chàbùduō","Zhuānmén","Bìyè","Máfan","Lín","Zhāng yuán","Shànghǎi",
+"Guówài","Fēi","Dìtiě","Yù dào","Lù yóu","Cānjiā","Fàndiàn","Chídào","Fàngxīn","Bàn","Zhàopiàn",
+"Duàn","Kuàilè","Rìzǐ","Chóngxīn","Huí dào","Dāngrán","Nánfāng","Yǐjīng","Zhīdào","Yǒuyì","Róngyì",
+"Fēngfù","Líkāi","Wúliáo","Tǎoyàn","Què","Zhōuwéi","Jiāoliú","Liǎojiě","Xìngqù","Chéngwéi","Lǐjiě",
+"Jìngzǐ","Ér","Dāng","Kùnnán","Jíshí","Péi","Shēnbiān","Zhàn","Bāngzhù","Jǐnzhāng","Xìnxīn","Nénglì",
+"Zhāopìn","Tígōng","Xiǎoyǔ","Juédìng","Jīhuì","Fùzé","Běnlái","Yìngpìn","Cáiliào","Fúhé","Tōngzhī",
+"Túrán","Zhùyuàn","Jīngguò","Bǐshì","Miànshì","Bǐjiào","Yāoqiú","Xià zhōu","Mǎshàng","Zhuānyè",
+"Lìngwài","Shōurù","Zánmen","Ānpái","Tóngshì","Jīnglǐ","Shǒuxiān","Zhèngshì","Liú","Qícì","Chéngshí",
+"Gǎibiàn","Gǎnjué","Pànduàn","Gùkè","Zhǔnshí","Bùguǎn","Yǔ","Yuēhuì","Mài chū","Bùguǎn","Yuēhuì",
+"Zhòngyào","Tí","Yǐwéi","Fèn","Wánquán","Zhuàn","Diàochá","Yuánlái","Jìhuà","Tíqián","Bǎozhèng",
+"Tíxǐng","Luàn","Shēngyì","Tán","Bìng","Jīlěi","Jīngyàn","Yīqiè","Jízhuó","Jiǎndān","Wànshì kāitóu nán",
+"Ànzhào","Chénggōng","Shùnlì","Gǎnxiè","Xiāoxī","Ànshí","Jiǎngjīn","Chéngjì","Gōngzī","Fāngfǎ","Zhīshì",
+"Bùdé bù","Zhēnshi","Zérèn","Jiājù","Shāfā","Dǎzhé","Jiàgé","Zhìliàng","Kěndìng","Liúxíng","Xuǎnzé",
+"Shùnbiàn","Tái","Guāng","Shízài","Zhìlěng","Xiàoguǒ","Xiànjīn","Yāoqǐng","Pútáo","Yìshù","Guǎnggào",
+"Wèidào","Yōudiǎn","Shíjì","Kǎolǜ","Bǎozhǔn","Yàngzǐ","Niánlíng","Làngfèi","Gòuwù","Yóuqí","Shòudào",
+"Rènhé","Jì","Guǒzhī","Shòuhuòyuán","Wàzǐ","Dǎrǎo","Jìngrán","Xīhóngshì","Bǎi fēn zhī","Bèi","Pífū",
+"Hǎochù","Zhǎng","Cháng","Qīng","Fāngmiàn","Zhídé","Huódòng","Nèi","Miǎnfèi","Xiūlǐ","Qīng","Zhīchí",
+"Jǔxíng","Mǎn","Qízhōng","Xiǎoshuō","Huìyuán kǎ","Suǒyǒu","Huòdé","Qíngkuàng","Lìrú","Jǔbàn","Gè",
+"Jiàngdī","Jiérì","Huódòng","Bízǐ","Liúxuè","Yòng zhǐ","Cā","Hái bù xíguàn","Qìhòu","Gūjì","Gàn","Gǎnmào",
+"Késòu","Tóuténg","Yánzhòng","Bǎonuǎn","Chuānghù","Dǎkāi","Kōngqì","Lǎo yàngzǐ","Bùyào zài...Le",
+"Chōuyān","Dòngzuò","Shuài","Kàn shàngqù","Chūxiàn wèntí","Hòuhuǐ","Láibují","Fǎnduì","Dānxīn","Jiànkāng",
+"Tiào","Cháng shíjiān","Kāishǐ","Gàosù","Zhíwù","Yuǎn chù","Duìzhe","Yánjiū","Jìngzuò","Chāoguò",
+"Xiàng.. Zhè.. De rén","Qǐlái","Wǔfàn hòu","Fùjìn","Sàn sànbù","Cái shì","Guòqù","Rènwéi","Zhǐ",
+"Rènshí dào","Jīngshén shàng de","Hái zhǐ","Zhǐyǒu.. Cái..","Suànshì","Zhēnzhèng de","Jiàoshòu",
+"Shùzì","Shuōmíng","Yàoshi","Méi yòng","Píngshí","Chū wèntí","Tīngguò","Yī wèi","Jù","Sànbù",
+"Qián liǎng tiáo","Lǐjiě dé bù shēn","Zuìhòu yītiáo","Tóngyì","Duànliàn fāngfǎ","Jì.. Yòu","Jiǎnféi",
+"Bù huì xiàng.. Nàyàng..","Yījiā rén","Dùzǐ","Chī bǎole","Xūyào huódòng","Mángle yītiān","Jiāoliú",
+"Fūqī","Gǎnqíng","Jiāshēn gǎnqíng","Fánnǎo","Pǎo diàole","Qiǎokèlì","Chūguó","Qīnqī","Tián","Yúkuài",
+"Shǐ","Biàn dé","Guānyú","Měi","Fàngsōng","Yǒu yālì","Huíyì","Duō jìn yīgè qiú","Fāshēng","Shīfù",
+"Dàshǐ guǎn","Dǔchē","Jùlí","Jiā wǎn","Nàixīn","Chángqí","Gǎibiàn bùliǎo","Shìzhe","Cǎo","Shēngmìng",
+"Dà zìrán","Shēnghuó zhōng","Bù quēshǎo","Quēshǎo","Yǒuxīn","Dàochù","Dōu shì","Tàidù","Yīncǐ",
+"Zǒu chūlái","Chuāngwài","Chuānghù","Nénggòu","Kēxué yánjiū","Zhèngmíng","Wǎngwǎng","Yǔ.. Yǒuguān",
+"Jījí xiàngshàng","Gòngtóng tèdiǎn","Yángguāng","Gǎnqíng biànhuà","Gǎndào","Shāngxīn","Ānjìng xiàlái",
+"Dédào","Bǐnggān","Nándào","Dé","Jiānchí","Fàngqì","Zhǔyì","Wǎngqiú","Guójì","Qīngsōng","Yíng",
+"Suíbiàn","Hàn","Tōngguò","Piān","Zuòjiā","Dāngshí","Kěshì","Zhèngquè","Lǐxiǎng","Yǒnggǎn","Jiéguǒ",
+"Shībài","Guòchéng","Zhìshǎo","Zǒngjié","Qǔ","Jīnglì","Xǔduō","Qūbié","Zhànshí","Miàn duì","Bǐrú",
+"Xiàngpí","Táng","Dī","Dá'àn","Fù","Qióng","Děng","Yóuyú","Jīngjì","Tiáojiàn","Jiànyì","Zhíyè","Guānjiàn",
+"Jiānglái","Fāzhǎn","Zhuàn","Kùn","Lǐbài tiān","Kòng er","Mǔqīn","Bùguò","Yǒngyuǎn","Fāngxiàng","Yōuxiù",
+"Shúxī","Fānyì","Quèshí","Xīngfèn","Lā"
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"Lý Tấn","cả hai","tin tức","ấn tượng","sâu","Cuộc thi","thân thuộc","không chỉ","tính cách","Tôn Nhạc","Vương Tĩnh",
+"câu nói đùa","Không bao giờ","kết hôn","Mặc dù","dài","quan tâm","chung","Thích hợp","niềm hạnh phúc","Vui mừng",
+"vợ","Mạng sống","khá","Nếu chưa hoàn thành","Chỉ","lãng mạn","đủ","thiếu sót","chấp nhận","ghen tị","yêu","trẻ",
+"mặt trăng","Ngôi sao","mặc dù","làm thêm giờ","Sáng","di chuyển","Sở hữu","đèn","Thực ra","già đi","Đơn giản","thiên nhiên",
+"lý do","nhau","thu hút","sự hài hước","tính khí","thiên nhiên","bình thường","mặc dù","Miệng","Nó sẽ thay đổi","buồn",
+"luôn luôn","đường","Vui mừng","Và","hầu hết","Quả đỏ","Khuôn mặt","đặc biệt","thích nghi","chi trả","thường xuyên","thăm nom",
+"Tin nhắn ngắn","Vừa phải","mùa hè","đánh dấu","Thói quen","Đi vào","cửa hàng","giới thiệu","đoàn tụ","kết nối","hầu hết",
+"chuyên","tốt nghiệp","rắc rối","Rừng","Chương Nguyên","Thượng Hải","nước ngoài","bay","tàu điện ngầm","gặp","Chuyến đi đường bộ","tham gia",
+"Nhà hàng","đến muộn","yên tâm đi","Một nửa","ảnh","phần","hạnh phúc","ngày","lại","Mặt sau","chắc chắn","phía nam","đã","Biết",
+"tình bạn","dễ","Giàu có","rời khỏi","nhạt nhẽo","Ghét","Nhưng","xung quanh","giao tiếp","học hỏi","quan tâm","trở nên","hiểu","Gương",
+"Và","khi","khó khăn","kịp thời","đi cùng","Xung quanh","đứng","giúp đỡ","lo lắng","sự tự tin","khả năng","tuyển dụng","cung cấp",
+"Mưa nhẹ","Quyết định","Cơ hội","Chịu trách nhiệm","ban đầu","Đơn xin việc","Vật liệu","phù hợp với","thông báo","Đột ngột","Nhập viện",
+"đi qua","bài kiểm tra viết","phỏng vấn","So sánh","Yêu cầu","tuần tới","ngay lập tức","lớn lao","Ngoài ra","thu nhập","chúng tôi",
+"sắp xếp","đồng nghiệp","giám đốc","Đầu tiên","chính thức","Giữ","Thứ hai","trung thực","Thay đổi","Cảm thấy","phán xét","khách hàng",
+"đúng giờ","mặc dù","Và","Hẹn hò","Bán","mặc dù","Hẹn hò","quan trọng","mang","Nghĩ","chia sẻ","hoàn toàn","kiếm","cuộc điều tra",
+"hóa ra là","kế hoạch","trước","đảm bảo","nhắc lại","sự hỗn loạn","Việc kinh doanh","nói chuyện","Và","sự tích tụ","kinh nghiệm","mọi thứ",
+"Đang vội","Đơn giản","Mọi thứ đều khó khăn lúc đầu.","theo","thành công","trơn tru","tri ân","thông tin","đúng giờ","thưởng","điểm",
+"lương","phương pháp","Kiến thức","phải","Thật sự","trách nhiệm","nội thất","ghế sofa","Giảm giá","giá","chất lượng","khẳng định",
+"Sự phổ biến","chọn","Nhân tiện","tháp","Ánh sáng","Thực ra","Làm lạnh","Tác dụng","tiền mặt","mời","Quả nho","Nghệ thuật","quảng cáo",
+"mùi","lợi thế","thật sự","coi như","Đảm bảo","vẻ bề ngoài","tuổi","rác thải","Mua sắm","đặc biệt","Đã nhận","bất kì","gửi",
+"nước ép","Nhân viên bán hàng","tất","quấy rầy","hóa ra","cà chua","phần trăm","lần","da","lợi ích","dài","nếm","ánh sáng","diện mạo",
+"đáng giá","Hoạt động","Bên trong","miễn phí","Sửa chữa","ánh sáng","ủng hộ","Giữ","Đầy","TRONG","cuốn tiểu thuyết","Thẻ thành viên",
+"tất cả","lấy","Tình trạng","Ví dụ","giữ","mỗi","giảm bớt","lễ hội","Hoạt động","mũi","chảy máu","Giấy","lau đi","Tôi vẫn chưa quen với điều đó.",
+"khí hậu","ước lượng","Khô","lạnh lẽo","ho","Đau đầu","nghiêm trọng","Giữ ấm","cửa sổ","Mở","Không khí","Giống như mọi khi","Xin hãy dừng lại...",
+"khói","hoạt động","đẹp trai","Có vẻ như","Vấn đề","hối tiếc","Quá muộn rồi","phản đối","Lo lắng","khỏe mạnh","Nhảy","Lâu lắm rồi",
+"bắt đầu","Kể","thực vật","xa","chống lại","Nghiên cứu","Thiền định","Quá","Con. Voi. Người. Này","đứng lên","Sau bữa trưa",
+"gần đó","Đi dạo","Đó là","quá khứ","nghĩ","tham khảo","Nhận ra","tâm linh","Cũng đề cập đến","Chỉ nếu... thì...","Nó có thể được xem xét",
+"thật sự","giáo sư","con số","minh họa","nếu như","Vô ích","thường xuyên","Vấn đề","Tôi đã nghe nói về nó","Một","câu","đi bộ",
+"Hai cái đầu tiên","Không phải là một sự hiểu biết sâu sắc","Cái cuối cùng","đồng ý","Phương pháp tập luyện","Cả hai... và...","giảm cân",
+"Sẽ không như thế đâu...","gia đình","bụng","Tôi no rồi","Hoạt động cần thiết","Ngày bận rộn","giao tiếp","cặp đôi","cảm xúc",
+"Làm sâu sắc thêm cảm xúc","rắc rối","Họ đã bỏ chạy","sôcôla","Đi nước ngoài","liên quan đến","ngọt","vui sướng","làm","Trở nên","Về",
+"xinh đẹp","Thư giãn","Nhấn mạnh","nhớ","Một mục tiêu nữa","xảy ra","bậc thầy","đại sứ quán","Tắc đường","khoảng cách","Buổi tối tại nhà",
+"tính kiên nhẫn","dài","Không thể thay đổi","Thử","Cỏ","mạng sống","Thiên nhiên","Trong cuộc sống","Không thiếu","Thiếu","Với trái tim",
+"khắp mọi nơi","Tất cả","thái độ","Vì vậy","Đi ra ngoài","Bên ngoài cửa sổ","cửa sổ","Có thể","Nghiên cứu khoa học","chứng minh","thường",
+"Có liên quan đến...","Tích cực và tích cực","Đặc điểm chung","Ánh sáng mặt trời","Những thay đổi về cảm xúc","cảm thấy","buồn","Im lặng nào",
+"lấy","bánh quy","Có thể là...?","phải","kiên trì trong","bỏ cuộc","ý tưởng","quần vợt","tính quốc tế","dễ","thắng","bình thường","mồ hôi",
+"vượt qua","Chương","nhà văn","sau đó","Nhưng","Chính xác","lý tưởng","can đảm","kết quả","thất bại","quá trình","Ít nhất","Tóm tắt",
+"Nhặt","kinh nghiệm","nhiều","sự khác biệt","tạm thời","khuôn mặt","Ví dụ","cục tẩy","đường","Thấp","Trả lời","giàu có","nghèo","Chờ đợi",
+"bởi vì","kinh tế","tình trạng","gợi ý","Nghề nghiệp","chìa khóa","tương lai","phát triển","kiếm","Buồn ngủ","Chủ nhật","Kong'er","Mẹ",
+"Nhưng","mãi mãi","phương hướng","xuất sắc","thân thuộc","dịch","Thực ra","hào hứng","sự lôi kéo"
+];
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+
+function loadQ(){
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+       "❌ Sai rồi.<br>" +
+       "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+       "Pinyin: " + correct.py;
+  }
+
+  // khóa hết option sau khi chọn
+  document.querySelectorAll(".option").forEach(o=> o.onclick=null);
+}
+
+function nextQ(){
+  idx++;
+  if(idx >= vocab.length){
+    alert("Hết từ rồi fen!");
+    idx = 0;
+    shuffle(order);
+  }
+  loadQ();
+}
+
+loadQ();
+</script>
+</body>
+</html>
