@@ -2,31 +2,22 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
-<title>HSK Vocab Quiz</title>
-<style>
-  body { font-family: sans-serif; padding: 20px; }
-  #question { font-size: 28px; margin-bottom: 15px; font-weight: bold; }
-  .option {
-    padding: 12px;
-    border: 1px solid #aaa;
-    margin-bottom: 8px;
-    cursor: pointer;
-    border-radius: 6px;
-  }
-  .option:hover { background: #f0f0f0; }
-  #result { margin-top: 15px; font-size: 20px; font-weight: bold; }
-  #next { margin-top: 20px; padding: 12px 18px; font-size: 18px; }
-</style>
+<title>HSK4</title>
+<link rel="stylesheet" href="CSS/styles.css">
 </head>
 
 <body>
-<h2>HSK Vocabulary Quiz</h2>
-
-<div id="question"></div>
-<div id="options"></div>
-<div id="result"></div>
-<button id="next" onclick="nextQ()">Next</button>
-
+<div class="header">
+<h2>HSK Vocabulary Quiz HSK4</h2>
+<button class="btn-chuyen"><a href="index.html">Chuyển qua HSK3</a></button>
+</div>
+<div class="duong-ke"></div>
+<div class="quiz-wrap">
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
 
 <script>
 // ===============================================================

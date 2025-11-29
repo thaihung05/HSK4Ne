@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>HSK3</title>
+<link rel="stylesheet" href="CSS/styles.css">
+</head>
+
+<body>
+<div class="header">
+<h2>HSK Vocabulary Quiz HSK3</h2>
+<button class="btn-chuyen"><a href="index.html">Chuyển qua HSK4</a></button>
+</div>
+<div class="duong-ke"></div>
+
+<div class="quiz-wrap">
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"阿姨","啊","矮","爱好","安静","把","班","搬","办法","办公室","半","帮忙","包","饱","北方",
+"被","鼻子","比较","比赛","笔记本(电脑)","必须","变化","别人","冰箱","不但………………而且",
+"菜单","参加","草","层","差","超市","衬衫","成绩","城市","迟到","除了","船","春(天)","词典",
+"聪明","打扫","打算","带","担心","蛋糕","当然","地","灯","地方","地铁","地图","电梯","电子邮件",
+"东","冬(天)","动物","短","段","锻炼","多么","饿","耳朵","发","发烧","发现","方便","放","放心",
+"分","附近","复习","干净","感冒","感兴趣","刚才","个子","根据","跟","更","公斤","公园","故事",
+"刮风","关","关系","关心","关于","国家","过","过去","还是","害怕","黑板","后来","护照","花",
+"画","坏","欢迎","还","环境","换","回答","会议","或者","几乎","机会","极(了)","记得","季节",
+"检查","简单","见面","健康","讲","教","角","脚","接","街道","节目","节日","结婚","结束","解决",
+"借","经常","经过","经理","久","旧","句子","决定","可爱","渴","刻","客人","空调","口","哭",
+"裤子","筷子","蓝","老","离开","礼物","历史","脸","练习","辆","聊天(儿)","了解","邻居","留学",
+"楼","绿","马","马上","满意","帽子","米","面包","明白","拿","奶奶","南(方)","难","难过","年级",
+"年轻","鸟","努力","爬山","盘子","胖","皮鞋","啤酒","瓶子","其实","其他","奇怪","骑","起飞",
+"起来","清楚","请假","秋(天)","裙子","然后","热情","认为","认真","容易","如果","伞","上网",
+"生气","声音","世界","试","瘦","叔叔","舒服","树","数学","刷牙","双","水平","司机","太阳",
+"特别","疼","提高","体育","甜","条","同事","同意","头发","突然","图书馆","腿","完成","碗",
+"万","忘记","为","为了","位","文化","西","习惯","洗手间","洗澡","夏(天)","先","相信","香蕉",
+"向","像","小心","校长","新闻","新鲜","信用卡","行李箱","熊猫","需要","选择","要求","爷爷",
+"一定","一共","一会儿","一样","以前","一般","一边","一直","音乐","银行","饮料","应该",
+"影响","用","游戏","有名","又","遇到","元","愿意","月亮","越","站","张","长","着急","照顾",
+"照片","照相机","只","只有………………才","中间","终于","种","重要","周末","主要","注意",
+"自己","自行车","总是","嘴","最后","最近","作业","大山","黄河","李静","李小美","马可",
+"小刚","小丽","小明","小云","张","中文","周","周明","*词语","*各","*举行","*可乐",
+"*秘书","*情况","*生活","*睡着","*太太","*特点","*眼镜","*真正","*中介",
+"办事","帮","变","春节","打","到时候","房子","刚","贵","歌舞","红酒","句","开","每天",
+"哪里","女孩儿","钱包","人名","认","上","听说","外地","鲜花","香瓜","一般来说","以后",
+"音乐会","有点儿","早","怎么办","照","中秋节","电子游戏","电子词典","花瓶","奶瓶","以上"
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"Āyí","A","Ǎi","Àihào","Ānjìng","Bǎ","Bān","Bān","Bànfǎ","Bàngōngshì","Bàn","Bāngmáng","Bāo",
+"Bǎo","Běifāng","Bèi","Bízǐ","Bǐjiào","Bǐsài","Bǐjìběn (diànnǎo)","Bìxū","Biànhuà","Biérén",
+"Bīngxiāng","Bùdàn………………érqiě","Càidān","Cānjiā","Cǎo","Céng","Chà","Chāoshì","Chènshān",
+"Chéngjì","Chéngshì","Chídào","Chúle","Chuán","Chūn (tiān)","Cídiǎn","Cōngmíng","Dǎsǎo",
+"Dǎsuàn","Dài","Dānxīn","Dàngāo","Dāngrán","De","Dēng","Dìfāng","Dìtiě","Dìtú","Diàntī",
+"Diànzǐ yóujiàn","Dōng","Dōng (tiān)","Dòngwù","Duǎn","Duàn","Duànliàn","Duōme","È","Ěrduǒ",
+"Fā","Fāshāo","Fāxiàn","Fāngbiàn","Fàng","Fàngxīn","Fēn","Fùjìn","Fùxí","Gānjìng","Gǎnmào",
+"Gǎn xìngqù","Gāngcái","Gèzǐ","Gēnjù","Gēn","Gèng","Gōngjīn","Gōngyuán","Gùshì","Guā fēng",
+"Guān","Guānxì","Guānxīn","Guānyú","Guójiā","Guò","Guòqù","Háishì","Hàipà","Hēibǎn","Hòulái",
+"Hùzhào","Huā","Huà","Huài","Huānyíng","Hái","Huánjìng","Huàn","Huídá","Huìyì","Huòzhě",
+"Jīhū","Jīhuì","Jí (le)","Jìdé","Jìjié","Jiǎnchá","Jiǎndān","Jiànmiàn","Jiànkāng","Jiǎng",
+"Jiào","Jiǎo","Jiǎo","Jiē","Jiēdào","Jiémù","Jiérì","Jiéhūn","Jiéshù","Jiějué","Jiè",
+"Jīngcháng","Jīngguò","Jīnglǐ","Jiǔ","Jiù","Jùzǐ","Juédìng","Kě'ài","Kě","Kè","Kèrén","Kòngtiáo",
+"Kǒu","Kū","Kùzǐ","Kuàizǐ","Lán","Lǎo","Líkāi","Lǐwù","Lìshǐ","Liǎn","Liànxí","Liàng","Liáotiān (er)",
+"Liǎojiě","Línjū","Liúxué","Lóu","Lǜ","Mǎ","Mǎshàng","Mǎnyì","Màozǐ","Mǐ","Miànbāo","Míngbái",
+"Ná","Nǎinai","Nán (fāng)","Nán","Nánguò","Niánjí","Niánqīng","Niǎo","Nǔlì","Páshān","Pánzǐ",
+"Pàng","Píxié","Píjiǔ","Píngzǐ","Qíshí","Qítā","Qíguài","Qí","Qǐfēi","Qǐlái","Qīngchǔ","Qǐngjià",
+"Qiū (tiān)","Qúnzǐ","Ránhòu","Rèqíng","Rènwéi","Rènzhēn","Róngyì","Rúguǒ","Sǎn","Shàngwǎng",
+"Shēngqì","Shēngyīn","Shìjiè","Shì","Shòu","Shūshu","Shūfú","Shù","Shùxué","Shuāyá","Shuāng",
+"Shuǐpíng","Sījī","Tàiyáng","Tèbié","Téng","Tígāo","Tǐyù","Tián","Tiáo","Tóngshì","Tóngyì",
+"Tóufǎ","Túrán","Túshū guǎn","Tuǐ","Wánchéng","Wǎn","Wàn","Wàngjì","Wèi","Wèile","Wèi","Wénhuà",
+"Xī","Xíguàn","Xǐshǒujiān","Xǐzǎo","Xià (tiān)","Xiān","Xiāngxìn","Xiāngjiāo","Xiàng","Xiàng",
+"Xiǎoxīn","Xiàozhǎng","Xīnwén","Xīnxiān","Xìnyòngkǎ","Xínglǐ xiāng","Xióngmāo","Xūyào",
+"Xuǎnzé","Yāoqiú","Yéyé","Yīdìng","Yīgòng","Yīhuǐ'er","Yīyàng","Yǐqián","Yībān","Yībiān",
+"Yīzhí","Yīnyuè","Yínháng","Yǐnliào","Yīnggāi","Yǐngxiǎng","Yòng","Yóuxì","Yǒumíng","Yòu",
+"Yù dào","Yuán","Yuànyì","Yuèliàng","Yuè","Zhàn","Zhāng","Zhǎng","Zhāojí","Zhàogù","Zhàopiàn",
+"Zhàoxiàngjī","Zhǐ","Zhǐyǒu………………cái","Zhōngjiān","Zhōngyú","Zhǒng","Zhòngyào","Zhōumò",
+"Zhǔyào","Zhùyì","Zìjǐ","Zìxíngchē","Zǒng shì","Zuǐ","Zuìhòu","Zuìjìn","Zuòyè","Dàshān",
+"Huánghé","Lǐ jìng","Lǐxiǎoměi","Mǎ kě","Xiǎo gāng","Xiǎo lì","Xiǎomíng","Xiǎo yún","Zhāng",
+"Zhōngwén","Zhōu","Zhōumíng","*Cíyǔ","*Gè","*Jǔxíng","*Kělè","*Mìshū","*Qíngkuàng","*Shēnghuó",
+"*Shuìzhe","*Tàitài","*Tèdiǎn","*Yǎnjìng","*Zhēnzhèng","*Zhōngjiè","Bànshì","Bāng","Biàn",
+"Chūnjié","Dǎ","Dào shíhòu","Fángzǐ","Gāng","Guì","Gēwǔ","Hóngjiǔ","Jù","Kāi","Měitiān",
+"Nǎlǐ","Nǚhái ér","Qiánbāo","Rénmíng","Rèn","Shàng","Tīng shuō","Wàidì","Xiānhuā","Xiāngguā",
+"Yībān lái shuō","Yǐhòu","Yīnyuè huì","Yǒudiǎn er","Zǎo","Zěnme bàn","Zhào","Zhōngqiū jié",
+"Diànzǐ yóuxì","Diànzǐ cídiǎn","Huāpíng","Nǎipíng","Yǐshàng"
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"Dì","à","ngắn","Sở thích","Im lặng","Bó","lớp học","di chuyển","đường","văn phòng","Một nửa",
+"giúp đỡ","Cái túi","đầy","phía bắc","chăn bông","mũi","So sánh","Cuộc thi","Máy tính xách tay",
+"phải","thay đổi","những người khác","tủ lạnh","Không chỉ... mà còn","thực đơn","tham gia","Cỏ",
+"lớp","Sự khác biệt","siêu thị","áo sơ mi","điểm","Thành phố","đến muộn","Ngoài ra","Thuyền",
+"mùa xuân","từ điển","thông minh","lau dọn","Có ý định","mang đến","Lo lắng","bánh ngọt","chắc chắn",
+"đất","đèn","địa điểm","tàu điện ngầm","bản đồ","thang máy","email","Phía đông","mùa đông","động vật",
+"ngắn","phần","bài tập","Làm sao","Đói bụng","tai","tóc","sốt","Phát hiện","thuận lợi","đặt","yên tâm đi",
+"điểm","gần đó","ôn tập","lau dọn","lạnh lẽo","thú vị","Vừa rồi","Chiều cao","theo","Và","Thậm chí",
+"Kilôgam","vườn","câu chuyện","Gió","đóng","mối quan hệ","chăm sóc","Về","Quốc gia","Vượt qua",
+"quá khứ","vẫn","Nỗi sợ","bảng đen","sau đó","hộ chiếu","hoa","bức vẽ","xấu","Chào mừng","trở lại",
+"môi trường","Thay đổi","trả lời","Cuộc họp","hoặc","hầu hết","Cơ hội","Cực kỳ tốt","Nhớ","mùa",
+"nghiên cứu","Đơn giản","Gặp","khỏe mạnh","nói chuyện","dạy bảo","sừng","chân","nắm lấy","đường phố",
+"chương trình","lễ hội","kết hôn","Hoàn thành","gỡ rối","vay mượn","thường","đi qua","giám đốc","Dài",
+"cũ","câu","Quyết định","dễ thương","khát","khắc","khách mời","máy điều hòa","miệng","khóc","Quần dài",
+"Đũa","màu xanh","cũ","rời khỏi","Quà","lịch sử","Khuôn mặt","luyện tập","xe","Trò chuyện","học hỏi",
+"Hàng xóm","Du học","tòa nhà","màu xanh lá","ngựa","ngay lập tức","hài lòng","mũ","gạo","bánh mì",
+"hiểu","lấy","bà ngoại","phía nam","Khó","buồn","cấp","trẻ","chim","nỗ lực","leo núi","đĩa","mập",
+"giày da","bia","chai","Thực ra","khác","kỳ lạ","đi xe","cất cánh","đứng lên","rõ ràng","xin nghỉ phép",
+"mùa thu","váy","sau đó","nhiệt tình","cho rằng","nghiêm túc","dễ","nếu như","ô","lên mạng","tức giận",
+"âm thanh","thế giới","thử","gầy","chú","thoải mái","cây","toán","đánh răng","đôi","trình độ","tài xế",
+"mặt trời","đặc biệt","đau","cải thiện","thể thao","ngọt","dải","đồng nghiệp","đồng ý","tóc","đột ngột",
+"thư viện","chân","Hoàn thành","bát","vạn","quên","vì","để","vị trí","văn hóa","phía tây","thói quen",
+"nhà vệ sinh","tắm","mùa hè","đầu tiên","tin tưởng","chuối","hướng","giống","cẩn thận","hiệu trưởng",
+"tin tức","tươi","thẻ tín dụng","vali","gấu trúc","nhu cầu","lựa chọn","yêu cầu","ông nội","chắc chắn",
+"tổng cộng","một lát","giống nhau","trước","thông thường","vừa…vừa…","luôn luôn","âm nhạc","ngân hàng",
+"đồ uống","nên","ảnh hưởng","sử dụng","trò chơi","nổi tiếng","lại","gặp","đồng tiền","đồng ý",
+"mặt trăng","càng","đứng","tờ","dài","vội","chăm sóc","ảnh","máy ảnh","chỉ","chỉ khi","ở giữa",
+"cuối cùng","loại","quan trọng","cuối tuần","chủ yếu","chú ý","bản thân","xe đạp","luôn luôn","miệng",
+"cuối cùng","gần đây","bài tập","Núi lớn","Hoàng Hà","Lý Tĩnh","Lý Tiểu Mỹ","Marco","Tiểu Cương",
+"Tiểu Lệ","Tiểu Minh","Tiểu Vân","Chương","Tiếng Trung","tuần","Chu Minh","từ","mỗi","tổ chức",
+"cola","thư ký","tình huống","Cuộc sống","ngủ","bà","đặc điểm","kính","thật sự","trung gian",
+"giải quyết công việc","giúp","biến đổi","Tết","đánh","đến lúc đó","ngôi nhà","vừa","đắt","ca múa",
+"rượu vang","câu","mở","mỗi ngày","ở đâu","bé gái","ví tiền","tên người","nhận ra","đi lên","nghe nói",
+"ngoại tỉnh","hoa tươi","dưa","nói chung","sau này","buổi nhạc","hơi","sớm","làm sao","chụp","Tết Trung Thu",
+"game điện tử","từ điển điện tử","lọ hoa","bình sữa","ở trên"
+];
+
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+
+function loadQ(){
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+       "❌ Sai rồi.<br>" +
+       "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+       "Pinyin: " + correct.py;
+  }
+
+  // khóa hết option sau khi chọn
+  document.querySelectorAll(".option").forEach(o=> o.onclick=null);
+}
+
+function nextQ(){
+  idx++;
+  if(idx >= vocab.length){
+    alert("Hết từ rồi fen!");
+    idx = 0;
+    shuffle(order);
+  }
+  loadQ();
+}
+
+loadQ();
+</script>
+</body>
+</html>
