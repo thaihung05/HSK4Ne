@@ -1,0 +1,72 @@
+/* =========================================
+   📱 MOBILE ≤ 480px
+   ========================================= */
+@media (max-width: 480px) {
+
+    h2 {
+        font-size: 15px !important;
+        margin-right: 50px;
+    }
+
+    .btn-chuyen {
+        margin: 0 auto;
+        width: fit-content;
+    }
+
+    .btn-chuyen-text{
+        font-size: 15px;
+    }
+
+    .quiz-wrap {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 10px !important;
+    }
+
+    #question {
+        font-size: 22px !important;
+    }
+
+    .option {
+        width: 80% !important;
+        font-size: 16px !important;
+        margin: 8px 0 !important;
+        padding: 14px !important;
+    }
+
+    #next {
+        width: 40% !important;
+        font-size: 16px !important;
+        padding: 14px !important;
+        margin: 8px 0 !important;
+        left: 25%;
+    }
+}
+
+
+/* =========================================
+   📱📱 TABLET 481px – 768px
+   ========================================= */
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .quiz-wrap {
+        width: 80% !important;
+        margin: 0 auto !important;
+    }
+
+    #question {
+        font-size: 24px !important;
+    }
+
+    .option {
+        width: 100% !important;
+        font-size: 18px !important;
+        padding: 14px !important;
+    }
+
+    #next {
+        width: 100% !important;
+        font-size: 18px !important;
+        padding: 14px !important;
+    }
+}
