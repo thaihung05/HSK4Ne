@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK3</title>
+<link rel="stylesheet" href="CSS/styles.css">
+<link rel="stylesheet" href="CSS/responsive.css">
+</head>
+
+<body>
+<div class="header">
+<h2>HSK Vocabulary Quiz HSK4 Quyển 2</h2>
+<div>
+<button class="btn-chuyen"><a href="hsk3.html" class="btn-chuyen-text">Chuyển qua HSK3</a></button>
+<button class="btn-chuyen"><a href="index.html" class="btn-chuyen-text">Chuyển qua HSK4 quyển 1</a></button>
+<button class="btn-chuyen"><a href="hsk4quyen2.html" class="btn-chuyen-text">Chuyển qua HSK4 quyển 2</a></button>
+</div>
+</div>
+</div>
+<div class="duong-ke"></div>
+
+<div class="quiz-wrap">
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"流利","厉害","语法","准确","词语","连","大卫","句子","交流","平时","自然","另外",
+"建议","坚持","肯定","困难","遇到","空耳","阅读","来得及","复杂","只好","填空","猜",
+"否则","结束","主要","因为","结果","可是","放弃","其实","考得","填空题","选择题","实在",
+"想不出","随便","答案","认真","放法","客厅","到处","普通","无论。。。还是","杂志","著名",
+"小说","打开","世界","半个小时","一页","总能","找出","增加","压力","轻松","文章","之",
+"内容","然而","看法","根据","工资","篇","判断","相同","顺序","表示","养成","同时","精彩",
+"首先","有限的","成为","许多","找到","解决","情感","规定","死","可惜","全部","也许","商量",
+"并且","生意","谈成","经验","改变","态度","想法","试着","裤子","掉","盐","放盐","常用",
+"发自","里加","盐水","次数","保持","作用","无法","知识","课本","实际上","用心","总结",
+"详细","谈谈","解释","清楚","对于。。。来说","世界上","叶子","同样","教育","不同","使用",
+"语言","一门艺术","心里","嘴上","即使","直接","诚实","引起","误会","指出","提醒","无论",
+"尤其","事半功倍","节约","较少","力气","取得","效果","相反","五倍","事倍功半","并不一定",
+"适合自己","因此","仔细","情况","达到","京剧","专业","以为","演员","年轻时","有名","受",
+"观众","喜爱","深受。。。的喜爱","有着","上台","演出","到现在","大概","受了。。。影响",
+"讲","历史","故事","没想到","来自","跟着","一遍一遍","偶尔","唱上。。几句","京剧方面",
+"惊讶","声乐","基础","传统","把我","唱腔","流行歌","唱法","旋律","节奏","处理","之间",
+"正常交流","甚至","带来麻烦","申请","举办","互相","提供","机会","支持","春游","有趣",
+"开心","负责","相信","成功","大计划","之前","初步","确定","准备过程","筷子","已经",
+"并不","中国餐厅","方筷子的纸袋","详细说明","正确","互联网","进行过调查","错误","饮料",
+"当作","一种","药","随着","加深","解渴","十分","不可缺少","一部分","广东人","凉茶",
+"稍微","苦","中药"
+];
+
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"Liúlì","Lìhài","Yǔfǎ","Zhǔnquè","Cíyǔ","Lián","Dà Wèi","Jùzi","Jiāoliú","Píngshí","Zìrán","Lìngwài",
+"Jiànyì","Jiānchí","Kěndìng","Kùnnán","Yùdào","Kōng'ěr","Yuèdú","Láidejí","Fùzá","Zhǐhǎo","Tiánkòng","Cāi",
+"Fǒuzé","Jiéshù","Zhǔyào","Yīnwèi","Jiéguǒ","Kěshì","Fàngqì","Qíshí","Kǎo de","Tiánkòng tí","Xuǎnzétí","Shízài",
+"Xiǎng bù chū","Suíbiàn","Dá'àn","Rènzhēn","Fàng fǎ","Kètīng","Dàochù","Pǔtōng","Wúlùn...háishì","Zázhì","Zhùmíng",
+"Xiǎoshuō","Dǎkāi","Shìjiè","Bàn gè xiǎoshí","Yí yè","Zǒng néng","Zhǎo chū","Zēngjiā","Yālì","Qīngsōng","Wénzhāng","Zhī",
+"Nèiróng","Rán'ér","Kànfǎ","Gēnjù","Gōngzī","Piān","Pànduàn","Xiāngtóng","Shùnxù","Biǎoshì","Yǎngchéng","Tóngshí","Jīngcǎi",
+"Shǒuxiān","Yǒuxiàn de","Chéngwéi","Xǔduō","Zhǎodào","Jiějué","Qínggǎn","Guīdìng","Sǐ","Kěxí","Quánbù","Yěxǔ","Shāngliáng",
+"Bìngqiě","Shēngyì","Tánchéng","Jīngyàn","Gǎibiàn","Tàidù","Xiǎngfǎ","Shìzhe","Kùzi","Diào","Yán","Fàng yán","Chángyòng",
+"Fā zì","Lǐjiā","Yánshuǐ","Cìshù","Bǎochí","Zuòyòng","Wúfǎ","Zhīshi","Kèběn","Shíjì shang","Yòngxīn","Zǒngjié",
+"Xiángxì","Tán tán","Jiěshì","Qīngchǔ","Duìyú...láishuō","Shìjiè shàng","Yèzi","Tóngyàng","Jiàoyù","Bùtóng","Shǐyòng",
+"Yǔyán","Yì mén yìshù","Xīnlǐ","Zuǐ shàng","Jíshǐ","Zhíjiē","Chéngshí","Yǐnqǐ","Wùhuì","Zhǐchū","Tíxǐng","Wúlùn",
+"Yóuqí","Shìbàn gōngbèi","Jiéyuē","Jiào shǎo","Lìqì","Qǔdé","Xiàoguǒ","Xiāngfǎn","Wǔ bèi","Shìbèi gōngbàn","Bìng bù yídìng",
+"Shìhé zìjǐ","Yīncǐ","Zǐxì","Qíngkuàng","Dádào","Jīngjù","Zhuānyè","Yǐwéi","Yǎnyuán","Niánqīng shí","Yǒumíng","Shòu",
+"Guānzhòng","Xǐ'ài","Shēnshòu...de xǐ'ài","Yǒuzhe","Shàngtái","Yǎnchū","Dào xiànzài","Dàgài","Shòule...yǐngxiǎng",
+"Jiǎng","Lìshǐ","Gùshì","Méi xiǎngdào","Láizì","Gēnzhe","Yí biàn yí biàn","Ǒu'ěr","Chàng shàng jǐ jù","Jīngjù fāngmiàn",
+"Jīngyà","Shēngyuè","Jīchǔ","Chuántǒng","Bǎ wǒ","Chàngqiāng","Liúxíng gē","Chàngfǎ","Xuánlǜ","Jiézòu","Chǔlǐ","Zhī jiān",
+"Zhèngcháng jiāoliú","Shènzhì","Dài lái máfan","Shēnqǐng","Jǔbàn","Hùxiāng","Tígōng","Jīhuì","Zhīchí","Chūnyóu","Yǒuqù",
+"Kāixīn","Fùzé","Xiāngxìn","Chénggōng","Dà jìhuà","Zhīqián","Chūbù","Quèdìng","Zhǔnbèi guòchéng","Kuàizi","Yǐjīng",
+"Bìng bù","Zhōngguó cāntīng","Fāng kuàizi de zhǐdài","Xiángxì shuōmíng","Zhèngquè","Hùliánwǎng","Jìnxíngguò diàochá","Cuòwù",
+"Yǐnliào","Dàngzuò","Yī zhǒng","Yào","Suízhe","Jiāshēn","Jiěkě","Shífēn","Bùkě quēshǎo","Yībùfèn","Guǎngdōng rén",
+"Liángchá","Shāowéi","Kǔ","Zhōngyào"
+];
+
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"trôi chảy","giỏi / lợi hại","ngữ pháp","chính xác","từ ngữ","ngay cả","David","câu","giao tiếp","thường xuyên","tự nhiên","ngoài ra",
+"gợi ý","kiên trì","chắc chắn","khó khăn","gặp phải","nghe nhầm âm (misheard)","đọc","kịp","phức tạp","đành phải","điền vào chỗ trống","đoán",
+"nếu không thì","kết thúc","chủ yếu","bởi vì","kết quả","nhưng mà","bỏ cuộc","thực ra","thi được (kết quả thi)","câu điền vào chỗ trống","câu hỏi trắc nghiệm","thật sự",
+"không nghĩ ra được","tùy tiện","đáp án","nghiêm túc","cách làm / phương pháp","phòng khách","khắp nơi","bình thường","bất kể… hay…","tạp chí","nổi tiếng",
+"tiểu thuyết","mở ra","thế giới","nửa giờ","một trang","luôn luôn","tìm ra","tăng thêm","áp lực","nhẹ nhàng","bài viết","của",
+"nội dung","tuy nhiên","quan điểm","dựa theo","tiền lương","bài (lượng từ)","phán đoán","giống nhau","thứ tự","biểu thị","hình thành (thói quen)","đồng thời","tuyệt vời",
+"trước hết","có giới hạn","trở thành","nhiều","tìm thấy","giải quyết","tình cảm","quy định","chết","đáng tiếc","toàn bộ","có lẽ","bàn bạc",
+"và / hơn nữa","kinh doanh","đàm phán thành công","kinh nghiệm","thay đổi","thái độ","ý nghĩ","thử","quần dài","rơi","muối","cho muối","thường dùng",
+"xuất phát từ","Riga","nước muối","số lần","giữ gìn","tác dụng","không thể","kiến thức","sách giáo khoa","trên thực tế","chuyên tâm","tổng kết",
+"chi tiết","bàn luận","giải thích","rõ ràng","đối với… mà nói","trên thế giới","lá","giống nhau","giáo dục","khác nhau","sử dụng",
+"ngôn ngữ","một nghệ thuật","trong lòng","miệng (nói miệng)","dù cho","trực tiếp","trung thực","gây ra","hiểu lầm","chỉ ra","nhắc nhở","bất kể",
+"đặc biệt","làm ít hiệu quả nhiều","tiết kiệm","ít hơn","sức lực","đạt được","hiệu quả","ngược lại","gấp 5 lần","làm nhiều hiệu quả ít","cũng không hẳn là",
+"phù hợp với bản thân","vì vậy","cẩn thận","tình hình","đạt tới","Kinh kịch","chuyên ngành","tưởng rằng","diễn viên","khi còn trẻ","nổi tiếng","bị",
+"khán giả","yêu thích","được… yêu thích sâu sắc","có","lên sân khấu","biểu diễn","đến bây giờ","đại khái","bị… ảnh hưởng",
+"kể","lịch sử","câu chuyện","không ngờ đến","đến từ","đi theo","lặp đi lặp lại","thỉnh thoảng","hát vài câu","về lĩnh vực Kinh kịch",
+"ngạc nhiên","thanh nhạc","nền tảng","truyền thống","khiến tôi…","cách hát (Kinh kịch)","nhạc pop","phong cách hát","giai điệu","nhịp điệu","xử lý","giữa",
+"giao tiếp bình thường","thậm chí","mang lại phiền phức","nộp đơn","tổ chức","lẫn nhau","cung cấp","cơ hội","ủng hộ","du xuân","thú vị",
+"vui vẻ","phụ trách","tin tưởng","thành công","kế hoạch lớn","trước đó","sơ bộ","xác định","quá trình chuẩn bị","đũa","đã","không hẳn",
+"nhà hàng Trung Quốc","túi giấy đựng đũa","mô tả chi tiết","chính xác","internet","đã tiến hành điều tra","sai","đồ uống","coi như","một loại","thuốc",
+"cùng với","đào sâu","giải khát","rất","không thể thiếu","một phần","người Quảng Đông","trà thảo mộc","hơi","đắng","thuốc Đông y"
+];
+
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+
+function loadQ(){
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+       "❌ Sai rồi.<br>" +
+       "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+       "Pinyin: " + correct.py;
+  }
+
+  // khóa hết option sau khi chọn
+  document.querySelectorAll(".option").forEach(o=> o.onclick=null);
+}
+
+function nextQ(){
+  idx++;
+  if(idx >= vocab.length){
+    alert("Hết từ rồi fen!");
+    idx = 0;
+    shuffle(order);
+  }
+  loadQ();
+}
+
+loadQ();
+</script>
+</body>
+</html>
