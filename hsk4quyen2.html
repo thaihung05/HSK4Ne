@@ -31,87 +31,322 @@
 // ===============================================================
 // 1) LIST TỪ HÁN TỰ
 const words = [
-"流利","厉害","语法","准确","词语","连","大卫","句子","交流","平时","自然","另外",
-"建议","坚持","肯定","困难","遇到","空耳","阅读","来得及","复杂","只好","填空","猜",
-"否则","结束","主要","因为","结果","可是","放弃","其实","考得","填空题","选择题","实在",
-"想不出","随便","答案","认真","放法","客厅","到处","普通","无论。。。还是","杂志","著名",
-"小说","打开","世界","半个小时","一页","总能","找出","增加","压力","轻松","文章","之",
-"内容","然而","看法","根据","工资","篇","判断","相同","顺序","表示","养成","同时","精彩",
-"首先","有限的","成为","许多","找到","解决","情感","规定","死","可惜","全部","也许","商量",
-"并且","生意","谈成","经验","改变","态度","想法","试着","裤子","掉","盐","放盐","常用",
-"发自","里加","盐水","次数","保持","作用","无法","知识","课本","实际上","用心","总结",
-"详细","谈谈","解释","清楚","对于。。。来说","世界上","叶子","同样","教育","不同","使用",
-"语言","一门艺术","心里","嘴上","即使","直接","诚实","引起","误会","指出","提醒","无论",
-"尤其","事半功倍","节约","较少","力气","取得","效果","相反","五倍","事倍功半","并不一定",
-"适合自己","因此","仔细","情况","达到","京剧","专业","以为","演员","年轻时","有名","受",
-"观众","喜爱","深受。。。的喜爱","有着","上台","演出","到现在","大概","受了。。。影响",
-"讲","历史","故事","没想到","来自","跟着","一遍一遍","偶尔","唱上。。几句","京剧方面",
-"惊讶","声乐","基础","传统","把我","唱腔","流行歌","唱法","旋律","节奏","处理","之间",
-"正常交流","甚至","带来麻烦","申请","举办","互相","提供","机会","支持","春游","有趣",
-"开心","负责","相信","成功","大计划","之前","初步","确定","准备过程","筷子","已经",
-"并不","中国餐厅","方筷子的纸袋","详细说明","正确","互联网","进行过调查","错误","饮料",
-"当作","一种","药","随着","加深","解渴","十分","不可缺少","一部分","广东人","凉茶",
-"稍微","苦","中药"
+  "流利","厉害","语法","准确","词语","连","大卫","句子","交流","平时","自然",
+  "另外","建议","坚持","肯定","困难","遇到","空耳","阅读","来得及","复杂","只好","填空","猜",
+  "否则","结束","主要","因为","结果","可是","放弃","其实","考得","填空题","选择题","实在",
+  "想不出","随便","猜","答案","认真","放法","否则","客厅","到处","普通","无论。。。还是",
+  "杂志","著名","小说","打开","世界","半个小时","一页","总能","找出","增加","压力","轻松",
+  "文章","之","内容","然而","看法","根据","工资","篇","判断","坚持","相同","顺序","表示",
+  "养成","同时","精彩","首先","有限的","养成","成为","许多","找到","解决","同时","情感",
+  "规定","死","可惜","全部","也许","商量","并且","生意","谈成","经验","建议","改变","态度",
+  "想法","试着","许这","准确","裤子","掉","盐","放盐","常用","发自","里加","盐水","次数",
+  "保持","作用","无法","知识","课本","实际上","用心",
+
+  "总结","详细","谈谈","解释","清楚","对于。。。来说","世界上","叶子","同样","教育","不同",
+  "使用","语言","一门艺术","心里","嘴上","即使","直接","诚实","引起","误会","指出","提醒",
+  "无论","尤其","事半功倍","节约","较少","力气","取得","效果","相反","五倍","结果",
+  "事倍功半","也许","并不一定","适合自己","因此","同时","仔细","情况","达到",
+
+  "京剧","专业","以为","演员","年轻时","有名","受","观众","喜爱","深受。。。的喜爱","有着",
+  "上台","演出","到现在","大概","受了。。。影响","讲","历史","故事","没想到","来自","跟着",
+  "一遍一遍","偶尔","唱上。。几句","京剧方面","惊讶","声乐","基础","传统","把我","唱腔",
+  "流行歌","唱法","旋律","节奏","处理","之间","正常交流","甚至","引起","误会","带来麻烦",
+
+  "申请","举办","互相","提供","机会","支持","春游","有趣","开心","负责","相信","成功",
+  "大计划","之前","初步","确定","准备过程","直接","筷子","已经","并不","中国餐厅",
+  "方筷子的纸袋","详细说明","正确","互联网","进行过调查","错误","饮料","当作","一种","药",
+  "而不是","随着","加深","解渴","十分","不可缺少","一部分","广东人","凉茶","稍微","苦","中药",
+
+  "出差","带","毛巾","牙膏","放到","宾馆","免费","提供","重","一直","保护","环境","身边",
+  "小事","做起","飞机","开车","送到","机场","堵车","严重","地铁","不仅","省","油钱",
+  "污染","空气","卫生间","脏","客人","留下","最快的","打扫","实在","抱歉","桌子","下面",
+  "空","饮料","瓶子","纸盒子","马上","扔掉","不管","干净","卫生","速度","完成","不过",
+
+  "地球","一小时","活动","最早","关灯","支持","厂里","通知","既然","加班","环保","环境保护",
+  "其实","起因","节约","用电","气候变暖","关注","塑料袋","带来","方便","普遍","过量",
+  "严重","环境污染","于是","超市","商场","顾客","鼓励","购买","购物袋","责任","自卑",
+  "甚至","拒接","减少","数量","做样","远","实际上","只需","空调","温度","开","出门时",
+  "记得","关","用电","乘坐","降低","空气污染","养成","垃圾",
+
+  "分类","垃圾桶","进入垃圾桶","实实在在","减少","使","美丽","弹钢琴","表演","棒","孙子",
+  "寒假","新年晚会","想起来","教育","优秀","闹钟","响","不醒","赶时间","送她上学","急着",
+  "上厕所","批评","弄的","管理时间","替他做","打针","显得","小声的","安慰","鼓励","表扬",
+  "千万不要","怀疑","要及时","过程","积极性","通过",
+
+  "扔东西","敲打","引起","生气","停下","手中的事情","陪孩子","整理东西","弄清楚","儿童",
+  "骗人","学者","说假话","好动","坐不住","年龄段","内容","懒","笨","粗心","批评","害羞",
+  "鼓励说出",
+
+  "硕士","将来","读博士","签证","证明","护照","国外的大学","填写","报名","表格","邀请信",
+  "传真","使馆","电话号码","老板","经验","过程","激动","小伙子","吃惊","记者","各种",
+  "代表","大小","那块","不好意思","拒绝","放假","失望","郊区","火车票","到底","外地",
+  "我当导游","不愿意","无法完成的任务","误会","伤心","合适","原谅","这种","同情",
+
+  "从。。。做起","课前","预习","找出","重点","马虎","课后","记得","自信","冷静","骄傲",
+  "永远","输","赢","周围","差","尊重",
+
+  "凉快","风","刮","草地","一层","厚的","黄叶","秋天","香山","热闹","气温","降低","植物",
+  "吸引","游客","广播","好地方","长城","倒是","好主意","恐怕",
+
+  "毛","一抱","动物","稍微","养","去做","任务","耐心","熟悉","严格","心情","陪着","难受",
+  "趟","动物园","约","导游","亚洲","之一","放暑假","老虎","熊猫","当时","大多","赶上",
+  "六一儿童节","带着","入口处","排队","极了","活泼","身子",
+
+  "全世界","作为","其他","送给","社会上","竞争","奇怪","阳光","植物","获得","低矮的",
+  "长在","由于","条件","世界各地","暖和","水分","长得","大约","的地方","海洋","海底",
+  "各种各样","美人鱼","故事","科学","研究","底部","动物们","就算","几公里","仍然",
+  "发出","亮光","排列起来","美极了","就像","在梦里",
+
+  "起飞","降落","奇特","火","相信","难道","作者","记住","内容","更新","包括","技术",
+  "不过","是否","易懂","增长","交通","认真","还得","否则","查找","几秒钟","解决",
+  "这比。。。方便了","据调查","互联网","发展","受不了","方式","写日记","了解",
+
+  "节约","用纸","保护环境","安全","网上的日记","加密码","允许","奇怪","梦","一座桥上",
+  "开过来","一辆车","危险","接着","警察","抓住","坏人","记住","做过梦","区别","睡醒之后",
+  "清楚","到咯","将来",
+
+  "一般。。。时","咸","矿泉水","对。。。进行","解释","甚至","专门","仍然","科学的说法",
+  "价格","降低","发短信","用它来","玩儿游戏","付款","举","地址","地点","一部","世纪",
+  "发生","巨大","几千公里","坐船","原来","寄信","连。。。都","邮局","远处的朋友","收到",
+  "写信封","短","外地","网站","任何","现代","发展","叫做","地球村"
 ];
+
 
 
 
 // 2) LIST PINYIN
 const pinyin = [
-"Liúlì","Lìhài","Yǔfǎ","Zhǔnquè","Cíyǔ","Lián","Dà Wèi","Jùzi","Jiāoliú","Píngshí","Zìrán","Lìngwài",
-"Jiànyì","Jiānchí","Kěndìng","Kùnnán","Yùdào","Kōng'ěr","Yuèdú","Láidejí","Fùzá","Zhǐhǎo","Tiánkòng","Cāi",
-"Fǒuzé","Jiéshù","Zhǔyào","Yīnwèi","Jiéguǒ","Kěshì","Fàngqì","Qíshí","Kǎo de","Tiánkòng tí","Xuǎnzétí","Shízài",
-"Xiǎng bù chū","Suíbiàn","Dá'àn","Rènzhēn","Fàng fǎ","Kètīng","Dàochù","Pǔtōng","Wúlùn...háishì","Zázhì","Zhùmíng",
-"Xiǎoshuō","Dǎkāi","Shìjiè","Bàn gè xiǎoshí","Yí yè","Zǒng néng","Zhǎo chū","Zēngjiā","Yālì","Qīngsōng","Wénzhāng","Zhī",
-"Nèiróng","Rán'ér","Kànfǎ","Gēnjù","Gōngzī","Piān","Pànduàn","Xiāngtóng","Shùnxù","Biǎoshì","Yǎngchéng","Tóngshí","Jīngcǎi",
-"Shǒuxiān","Yǒuxiàn de","Chéngwéi","Xǔduō","Zhǎodào","Jiějué","Qínggǎn","Guīdìng","Sǐ","Kěxí","Quánbù","Yěxǔ","Shāngliáng",
-"Bìngqiě","Shēngyì","Tánchéng","Jīngyàn","Gǎibiàn","Tàidù","Xiǎngfǎ","Shìzhe","Kùzi","Diào","Yán","Fàng yán","Chángyòng",
-"Fā zì","Lǐjiā","Yánshuǐ","Cìshù","Bǎochí","Zuòyòng","Wúfǎ","Zhīshi","Kèběn","Shíjì shang","Yòngxīn","Zǒngjié",
-"Xiángxì","Tán tán","Jiěshì","Qīngchǔ","Duìyú...láishuō","Shìjiè shàng","Yèzi","Tóngyàng","Jiàoyù","Bùtóng","Shǐyòng",
-"Yǔyán","Yì mén yìshù","Xīnlǐ","Zuǐ shàng","Jíshǐ","Zhíjiē","Chéngshí","Yǐnqǐ","Wùhuì","Zhǐchū","Tíxǐng","Wúlùn",
-"Yóuqí","Shìbàn gōngbèi","Jiéyuē","Jiào shǎo","Lìqì","Qǔdé","Xiàoguǒ","Xiāngfǎn","Wǔ bèi","Shìbèi gōngbàn","Bìng bù yídìng",
-"Shìhé zìjǐ","Yīncǐ","Zǐxì","Qíngkuàng","Dádào","Jīngjù","Zhuānyè","Yǐwéi","Yǎnyuán","Niánqīng shí","Yǒumíng","Shòu",
-"Guānzhòng","Xǐ'ài","Shēnshòu...de xǐ'ài","Yǒuzhe","Shàngtái","Yǎnchū","Dào xiànzài","Dàgài","Shòule...yǐngxiǎng",
-"Jiǎng","Lìshǐ","Gùshì","Méi xiǎngdào","Láizì","Gēnzhe","Yí biàn yí biàn","Ǒu'ěr","Chàng shàng jǐ jù","Jīngjù fāngmiàn",
-"Jīngyà","Shēngyuè","Jīchǔ","Chuántǒng","Bǎ wǒ","Chàngqiāng","Liúxíng gē","Chàngfǎ","Xuánlǜ","Jiézòu","Chǔlǐ","Zhī jiān",
-"Zhèngcháng jiāoliú","Shènzhì","Dài lái máfan","Shēnqǐng","Jǔbàn","Hùxiāng","Tígōng","Jīhuì","Zhīchí","Chūnyóu","Yǒuqù",
-"Kāixīn","Fùzé","Xiāngxìn","Chénggōng","Dà jìhuà","Zhīqián","Chūbù","Quèdìng","Zhǔnbèi guòchéng","Kuàizi","Yǐjīng",
-"Bìng bù","Zhōngguó cāntīng","Fāng kuàizi de zhǐdài","Xiángxì shuōmíng","Zhèngquè","Hùliánwǎng","Jìnxíngguò diàochá","Cuòwù",
-"Yǐnliào","Dàngzuò","Yī zhǒng","Yào","Suízhe","Jiāshēn","Jiěkě","Shífēn","Bùkě quēshǎo","Yībùfèn","Guǎngdōng rén",
-"Liángchá","Shāowéi","Kǔ","Zhōngyào"
+  "Liúlì","Lìhài","Yǔfǎ","Zhǔnquè","Cíyǔ","Lián","Dà wèi","Jùzǐ","Jiāoliú","Píngshí","Zìrán",
+  "Lìngwài","Jiànyì","Jiānchí","Kěndìng","Kùnnán","Yù dào","Kōng'ěr","Yuèdú","Láidéjí","Fùzá",
+  "Zhǐhǎo","Tiánkòng","Cāi","Fǒuzé","Jiéshù","Zhǔyào","Yīnwèi","Jiéguǒ","Kěshì","Fàngqì",
+  "Qíshí","Kǎo dé","Tiánkòng tí","Xuǎnzé tí","Shízài","Xiǎng bù chū","Suíbiàn","Cāi","Dá'àn",
+  "Rènzhēn","Fàng fǎ","Fǒuzé","Kètīng","Dàochù","Pǔtōng","Wúlùn... Háishì","Zázhì","Zhùmíng",
+  "Xiǎoshuō","Dǎkāi","Shìjiè","Bàn gè xiǎoshí","Yī yè","Zǒng néng","Zhǎo chū","Zēngjiā",
+  "Yālì","Qīngsōng","Wénzhāng","Zhī","Nèiróng","Rán'ér","Kànfǎ","Gēnjù","Gōngzī","Piān",
+  "Pànduàn","Jiānchí","Xiāngtóng","Shùnxù","Biǎoshì","Yǎng chéng","Tóngshí","Jīngcǎi",
+  "Shǒuxiān","Yǒuxiàn de","Yǎng chéng","Chéngwéi","Xǔduō","Zhǎodào","Jiějué","Tóngshí",
+  "Qínggǎn","Guīdìng","Sǐ","Kěxí","Quánbù","Yěxǔ","Shāngliáng","Bìngqiě","Shēngyì",
+  "Tán chéng","Jīngyàn","Jiànyì","Gǎibiàn","Tàidù","Xiǎngfǎ","Shìzhe","Xǔ zhè","Zhǔnquè",
+  "Kùzǐ","Diào","Yán","Fàng yán","Chángyòng","Fā zì","Lǐjiā","Yánshuǐ","Cìshù","Bǎochí",
+  "Zuòyòng","Wúfǎ","Zhīshì","Kèběn","Shíjì shang","Yòngxīn",
+
+  "Zǒngjié","Xiángxì","Tán tán","Jiěshì","Qīngchǔ","Duìyú... Lái shuō","Shìjiè shàng",
+  "Yèzǐ","Tóngyàng","Jiàoyù","Bùtóng","Shǐyòng","Yǔyán","Yī mén yìshù","Xīnlǐ","Zuǐ shàng",
+  "Jíshǐ","Zhíjiē","Chéngshí","Yǐnqǐ","Wùhuì","Zhǐchū","Tíxǐng","Wúlùn","Yóuqí",
+  "Shìbàngōngbèi","Jiéyuē","Jiào shǎo","Lìqì","Qǔdé","Xiàoguǒ","Xiāngfǎn","Wǔ bèi",
+  "Jiéguǒ","Shìbèigōngbàn","Yěxǔ","Bìng bù yīdìng","Shìhé zìjǐ","Yīncǐ","Tóngshí",
+  "Zǐxì","Qíngkuàng","Dádào",
+
+  "Jīngjù","Zhuānyè","Yǐwéi","Yǎnyuán","Niánqīng shí","Yǒumíng","Shòu","Guānzhòng",
+  "Xǐ'ài","Shēn shòu... De xǐ'ài","Yǒuzhe","Shàngtái","Yǎnchū","Dào xiànzài","Dàgài",
+  "Shòule... Yǐngxiǎng","Jiǎng","Lìshǐ","Gùshì","Méi xiǎngdào","Láizì","Gēnzhe",
+  "Yībiàn yībiàn","Ǒu'ěr","Chàng shàng.. Jǐ jù","Jīngjù fāngmiàn","Jīngyà","Shēngyuè",
+  "Jīchǔ","Chuántǒng","Bǎ wǒ","Chàngqiāng","Liúxíng gē","Chàngfǎ","Xuánlǜ","Jiézòu",
+  "Chǔlǐ","Zhī jiān","Zhèngcháng jiāoliú","Shènzhì","Yǐnqǐ","Wùhuì","Dài lái máfan",
+
+  "Shēnqǐng","Jǔbàn","Hùxiāng","Tígōng","Jīhuì","Zhīchí","Chūnyóu","Yǒuqù","Kāixīn",
+  "Fùzé","Xiāngxìn","Chénggōng","Dà jìhuà","Zhīqián","Chūbù","Quèdìng",
+
+  "Zhǔnbèi guòchéng","Zhíjiē","Kuàizǐ","Yǐjīng","Bìng bù","Zhōngguó cāntīng",
+  "Fāng kuàizǐ de zhǐdài","Xiángxì shuōmíng","Zhèngquè","Hùliánwǎng",
+  "Jìnxíngguò diàochá","Cuòwù","Yǐnliào","Dàng zuò","Yī zhǒng","Yào","Ér bùshì",
+  "Suízhe","Jiāshēn","Jiěkě","Shífēn","Bùkě quēshǎo","Yībùfèn","Guǎngdōng rén",
+  "Liángchá","Shāowéi","Kǔ","Zhōngyào",
+
+  "Chūchāi","Dài","Máojīn","Yágāo","Fàng dào","Bīnguǎn","Miǎnfèi","Tígōng","Zhòng",
+  "Yīzhí","Bǎohù","Huánjìng","Shēnbiān","Xiǎoshì","Zuò qǐ","Fēijī","Kāichē","Sòng dào",
+  "Jīchǎng","Dǔchē","Yánzhòng","Dìtiě","Bùjǐn","Shěng","Yóu qián","Wūrǎn","Kōngqì",
+  "Wèishēngjiān","Zàng","Kèrén","Liú xià","Zuì kuài de","Dǎsǎo","Shízài","Bàoqiàn",
+  "Zhuōzǐ","Xiàmiàn","Kōng","Yǐnliào","Píngzǐ","Zhǐ hé zǐ","Mǎshàng","Rēng diào",
+  "Bùguǎn","Gānjìng","Wèishēng","Sùdù","Wánchéng","Bùguò",
+
+  "Dìqiú","Yī xiǎoshí","Huódòng","Zuìzǎo","Guān dēng","Zhīchí","Chǎng lǐ","Tōngzhī",
+  "Jìrán","Jiābān","Huánbǎo","Huánjìng bǎohù","Qíshí","Qǐyīn","Jiéyuē","Yòng diàn",
+  "Qìhòu biàn nuǎn","Guānzhù","Sùliào dài","Dài lái","Fāngbiàn","Pǔbiàn","Guòliàng",
+  "Yánzhòng","Huánjìng wūrǎn","Yúshì","Chāoshì","Shāngchǎng","Gùkè","Gǔlì","Gòumǎi",
+  "Gòuwù dài","Zérèn","Zìbēi","Shènzhì","Jù jiē","Jiǎnshǎo","Shùliàng","Zuò yàng",
+  "Yuǎn","Shíjì shang","Zhǐ xū","Kòngtiáo","Wēndù","Kāi","Chūmén shí","Jìdé","Guān",
+  "Yòng diàn","Chéngzuò","Jiàngdī","Kōngqì wūrǎn","Yǎng chéng","Lèsè",
+
+  "Fēnlèi","Lèsè tǒng","Jìnrù lèsè tǒng","Shí shízài zài","Jiǎnshǎo","Shǐ","Měilì",
+  "Dàn gāngqín","Biǎoyǎn","Bàng","Sūnzǐ","Hánjià","Xīnnián wǎnhuì","Xiǎng qǐlái",
+  "Jiàoyù","Yōuxiù","Nàozhōng","Xiǎng","Bù xǐng","Gǎn shíjiān","Sòng tā shàngxué",
+  "Jízhuó","Shàng cèsuǒ","Pīpíng","Nòng de","Guǎnlǐ shíjiān","Tì tā zuò","Dǎzhēn",
+  "Xiǎndé","Xiǎoshēng de","Ānwèi","Gǔlì","Biǎoyáng","Qiān wàn bùyào","Huáiyí",
+  "Yào jíshí","Guòchéng","Jījíxìng","Tōngguò",
+
+  "Rēng dōngxī","Qiāodǎ","Yǐnqǐ","Shēngqì","Tíng xià","Shǒuzhōng de shìqíng",
+  "Péi háizǐ","Zhěnglǐ dōngxī","Nòng qīngchǔ","Értóng","Piàn rén","Xuézhě",
+  "Shuō jiǎ huà","Hǎo dòng","Zuò bù zhù","Niánlíng duàn","Nèiróng","Lǎn","Bèn",
+  "Cūxīn","Pīpíng","Hàixiū","Gǔlì shuō chū",
+
+  "Shuòshì","Jiānglái","Dú bóshì","Qiānzhèng","Zhèngmíng","Hùzhào",
+  "Guówài de dàxué","Tiánxiě","Bàomíng","Biǎogé","Yāoqǐng xìn","Chuánzhēn",
+  "Shǐguǎn","Diànhuà hàomǎ","Lǎobǎn","Jīngyàn","Guòchéng","Jīdòng",
+  "Xiǎohuǒzǐ","Chījīng","Jìzhě","Gè zhǒng","Dàibiǎo","Dàxiǎo","Nà kuài",
+  "Bù hǎoyìsi","Jùjué","Fàngjià","Shīwàng","Jiāoqū","Huǒchē piào","Dàodǐ",
+  "Wàidì","Wǒ dāng dǎoyóu","Bù yuànyì","Wúfǎ wánchéng de rènwù","Wùhuì",
+  "Shāngxīn","Héshì","Yuánliàng","Zhè zhǒng","Tóngqíng",
+
+  "Cóng... Zuò qǐ","Kè qián","Yùxí","Zhǎo chū","Zhòngdiǎn","Mǎhǔ","Kè hòu",
+  "Jìdé","Zìxìn","Lěngjìng","Jiāo'ào","Yǒngyuǎn","Shū","Yíng","Zhōuwéi",
+  "Chà","Zūnzhòng",
+
+  "Liángkuai","Fēng","Guā","Cǎodì","Yī céng","Hòu de","Huáng yè","Qiūtiān",
+  "Xiāngshān","Rènào","Qìwēn","Jiàngdī","Zhíwù","Xīyǐn","Yóukè","Guǎngbò",
+  "Hǎo dìfāng","Chángchéng","Dǎoshì","Hǎo zhǔyì","Kǒngpà",
+
+  "Máo","Yī bào","Dòngwù","Shāowéi","Yǎng","Qù zuò","Rènwù","Nàixīn","Shúxī",
+  "Yángé","Xīnqíng","Péizhe","Nánshòu","Tàng","Dòngwùyuán","Yuē","Dǎoyóu",
+  "Yàzhōu","Zhī yī","Fàng shǔjià","Lǎohǔ","Xióngmāo","Dāngshí","Dàduō",
+  "Gǎn shàng","Liùyī értóng jié","Dàizhe","Rùkǒu chù","Páiduì","Jíle",
+  "Huópō","Shēnzǐ",
+
+  "Quán shìjiè","Zuòwéi","Qítā","Sòng gěi","Shèhuì shàng","Jìngzhēng","Qíguài",
+  "Yángguāng","Zhíwù","Huòdé","Dī ǎi de","Zhǎng zài","Yóuyú","Tiáojiàn",
+  "Shìjiè gèdì","Nuǎnhuo","Shuǐfèn","Zhǎng dé","Dàyuē","Dì dìfāng","Hǎiyáng",
+  "Hǎidǐ","Gè zhǒng gè yàng","Měirényú","Gùshì","Kēxué","Yánjiū","Dǐbù",
+  "Dòngwùmen","Jiùsuàn","Jǐ gōnglǐ","Réngrán","Fāchū","Liàngguāng",
+  "Páiliè qǐlái","Měi jíle","Jiù xiàng","Zài mèng lǐ",
+
+  "Qǐfēi","Jiàngluò","Qítè","Huǒ","Xiāngxìn","Nándào","Zuòzhě","Jì zhù",
+  "Nèiróng","Gēngxīn","Bāokuò","Jìshù","Bùguò","Shìfǒu","Yì dǒng","Zēngzhǎng",
+  "Jiāotōng","Rènzhēn","Hái dé","Fǒuzé","Cházhǎo","Jǐ miǎo zhōng","Jiějué",
+  "Zhè bǐ... Fāngbiànliǎo","Jù diàochá","Hùliánwǎng","Fāzhǎn","Shòu bùliǎo",
+  "Fāngshì","Xiě rìjì","Liǎojiě",
+
+  "Jiéyuē","Yòng zhǐ","Bǎohù huánjìng","Ānquán","Wǎngshàng de rìjì","Jiā mìmǎ",
+  "Yǔnxǔ","Qíguài","Mèng","Yīzuò qiáo shàng","Kāi guòlái","Yī liàng chē",
+  "Wéixiǎn","Jiēzhe","Jǐngchá","Zhuā zhù","Huàirén","Jì zhù","Zuòguò mèng",
+  "Qūbié","Shuì xǐng zhīhòu","Qīngchǔ","Dào gē","Jiānglái",
+
+  "Yībān... Shí","Xián","Kuàngquán shuǐ","Duì... Jìnxíng","Jiěshì","Shènzhì",
+  "Zhuānmén","Réngrán","Kēxué de shuōfǎ","Jiàgé","Jiàngdī","Fā duǎnxìn",
+  "Yòng tā lái","Wán er yóuxì","Fùkuǎn","Jǔ","Dìzhǐ","Dìdiǎn","Yī bù","Shìjì",
+  "Fāshēng","Jùdà","Jǐ qiān gōnglǐ","Zuò chuán","Yuánlái","Jì xìn","Lián... Dōu",
+  "Yóujú","Yuǎn chǔ de péngyǒu","Shōu dào","Xiě xìnfēng","Duǎn","Wàidì",
+  "Wǎngzhàn","Rènhé","Xiàndài","Fāzhǎn","Jiàozuò","Dìqiúcūn"
 ];
+
+
 
 
 
 // 3) LIST NGHĨA TIẾNG VIỆT
 const meaning = [
-"trôi chảy","giỏi / lợi hại","ngữ pháp","chính xác","từ ngữ","ngay cả","David","câu","giao tiếp","thường xuyên","tự nhiên","ngoài ra",
-"gợi ý","kiên trì","chắc chắn","khó khăn","gặp phải","nghe nhầm âm (misheard)","đọc","kịp","phức tạp","đành phải","điền vào chỗ trống","đoán",
-"nếu không thì","kết thúc","chủ yếu","bởi vì","kết quả","nhưng mà","bỏ cuộc","thực ra","thi được (kết quả thi)","câu điền vào chỗ trống","câu hỏi trắc nghiệm","thật sự",
-"không nghĩ ra được","tùy tiện","đáp án","nghiêm túc","cách làm / phương pháp","phòng khách","khắp nơi","bình thường","bất kể… hay…","tạp chí","nổi tiếng",
-"tiểu thuyết","mở ra","thế giới","nửa giờ","một trang","luôn luôn","tìm ra","tăng thêm","áp lực","nhẹ nhàng","bài viết","của",
-"nội dung","tuy nhiên","quan điểm","dựa theo","tiền lương","bài (lượng từ)","phán đoán","giống nhau","thứ tự","biểu thị","hình thành (thói quen)","đồng thời","tuyệt vời",
-"trước hết","có giới hạn","trở thành","nhiều","tìm thấy","giải quyết","tình cảm","quy định","chết","đáng tiếc","toàn bộ","có lẽ","bàn bạc",
-"và / hơn nữa","kinh doanh","đàm phán thành công","kinh nghiệm","thay đổi","thái độ","ý nghĩ","thử","quần dài","rơi","muối","cho muối","thường dùng",
-"xuất phát từ","Riga","nước muối","số lần","giữ gìn","tác dụng","không thể","kiến thức","sách giáo khoa","trên thực tế","chuyên tâm","tổng kết",
-"chi tiết","bàn luận","giải thích","rõ ràng","đối với… mà nói","trên thế giới","lá","giống nhau","giáo dục","khác nhau","sử dụng",
-"ngôn ngữ","một nghệ thuật","trong lòng","miệng (nói miệng)","dù cho","trực tiếp","trung thực","gây ra","hiểu lầm","chỉ ra","nhắc nhở","bất kể",
-"đặc biệt","làm ít hiệu quả nhiều","tiết kiệm","ít hơn","sức lực","đạt được","hiệu quả","ngược lại","gấp 5 lần","làm nhiều hiệu quả ít","cũng không hẳn là",
-"phù hợp với bản thân","vì vậy","cẩn thận","tình hình","đạt tới","Kinh kịch","chuyên ngành","tưởng rằng","diễn viên","khi còn trẻ","nổi tiếng","bị",
-"khán giả","yêu thích","được… yêu thích sâu sắc","có","lên sân khấu","biểu diễn","đến bây giờ","đại khái","bị… ảnh hưởng",
-"kể","lịch sử","câu chuyện","không ngờ đến","đến từ","đi theo","lặp đi lặp lại","thỉnh thoảng","hát vài câu","về lĩnh vực Kinh kịch",
-"ngạc nhiên","thanh nhạc","nền tảng","truyền thống","khiến tôi…","cách hát (Kinh kịch)","nhạc pop","phong cách hát","giai điệu","nhịp điệu","xử lý","giữa",
-"giao tiếp bình thường","thậm chí","mang lại phiền phức","nộp đơn","tổ chức","lẫn nhau","cung cấp","cơ hội","ủng hộ","du xuân","thú vị",
-"vui vẻ","phụ trách","tin tưởng","thành công","kế hoạch lớn","trước đó","sơ bộ","xác định","quá trình chuẩn bị","đũa","đã","không hẳn",
-"nhà hàng Trung Quốc","túi giấy đựng đũa","mô tả chi tiết","chính xác","internet","đã tiến hành điều tra","sai","đồ uống","coi như","một loại","thuốc",
-"cùng với","đào sâu","giải khát","rất","không thể thiếu","một phần","người Quảng Đông","trà thảo mộc","hơi","đắng","thuốc Đông y"
+  "thông thạo","sắc","ngữ pháp","chính xác","từ","thậm chí","David","câu","giao tiếp",
+  "thường xuyên","thiên nhiên",
+
+  "Ngoài ra","gợi ý","kiên trì trong","khẳng định","khó khăn","gặp","Tai trống rỗng","đọc",
+  "Vẫn chưa quá muộn","tổ hợp","Tôi không có sự lựa chọn nào khác.","Điền vào chỗ trống","Đoán",
+  "nếu không thì","Hoàn thành","chủ yếu","bởi vì","kết quả","Nhưng","bỏ cuộc","Thực ra",
+  "Bài kiểm tra","Điền vào chỗ trống","Câu hỏi trắc nghiệm","Thực ra","Tôi không nhớ ra.",
+  "bình thường","Đoán","Trả lời","nghiêm trọng","Phương pháp","nếu không thì","phòng khách",
+  "khắp mọi nơi","bình thường","Bất kể... hay","Tạp chí","Nổi tiếng","cuốn tiểu thuyết","Mở",
+  "thế giới","nửa giờ","Một trang","Luôn luôn","Tìm thấy","Tăng","áp lực","dễ","bài báo","Của",
+  "nội dung","Tuy nhiên","xem","theo","lương","Chương","phán xét","kiên trì trong","như nhau",
+  "thứ tự","thể hiện","Phát triển","đồng thời","Tuyệt vời","Đầu tiên","Giới hạn","Phát triển",
+  "trở nên","nhiều","xuất hiện","giải quyết","đồng thời","cảm xúc","Quy định","chết",
+  "đáng tiếc","tất cả","Có lẽ","bàn luận","Và","Việc kinh doanh",
+  "Các cuộc đàm phán đã kết thúc.","kinh nghiệm","gợi ý","Thay đổi","thái độ","ý tưởng","Thử",
+  "Có lẽ","chính xác","Quần dài","Rơi","Muối","Thêm muối","Thường được sử dụng","Từ","Riga",
+  "nước muối","Tần suất","Giữ","tác dụng","Không thể","Kiến thức","sách giáo khoa",
+  "Trong thực tế","Từ tận đáy lòng",
+
+  "Tóm tắt","chi tiết","Hãy nói chuyện","giải thích","rõ ràng","Về mặt...","Thế giới","lá cây",
+  "như nhau","giáo dục","khác biệt","sử dụng","ngôn ngữ","Một nghệ thuật","Trong lòng","miệng",
+  "mặc dù","trực tiếp","trung thực","gây ra","Hiểu lầm","Chỉ ra","nhắc nhở","bất kể","đặc biệt",
+  "Nửa công sức gấp đôi hiệu quả","tiết kiệm","ít hơn","sức lực","Đạt được","Hiệu quả",
+  "ngược lại","Năm lần","kết quả","Công nhiều hiệu quả ít","Có lẽ","Không nhất thiết",
+  "Phù hợp với bản thân","Vì vậy","đồng thời","cẩn thận","Tình trạng","đạt được",
+
+  "Kinh kịch Bắc Kinh","chuyên nghiệp","cho rằng","diễn viên","lúc trẻ","nổi tiếng","được",
+  "khán giả","yêu thích","được yêu thích sâu sắc","có","lên sân khấu","biểu diễn","cho đến nay",
+  "đại khái","bị ảnh hưởng bởi","kể","lịch sử","câu chuyện","không ngờ","đến từ","theo",
+  "lặp đi lặp lại","thỉnh thoảng","hát vài câu","về kinh kịch","ngạc nhiên","thanh nhạc",
+  "cơ sở","truyền thống","tôi","làn điệu","nhạc pop","cách hát","giai điệu","nhịp điệu",
+  "xử lý","giữa","giao tiếp bình thường","thậm chí","gây ra","hiểu lầm","gây phiền phức",
+
+  "đăng ký","tổ chức","lẫn nhau","cung cấp","cơ hội","ủng hộ","dã ngoại xuân","thú vị",
+  "vui vẻ","chịu trách nhiệm","tin tưởng","thành công","kế hoạch lớn","trước","sơ bộ","xác định",
+
+  "Quá trình chuẩn bị","trực tiếp","đũa","đã","không","nhà hàng Trung Quốc",
+  "túi giấy đựng đũa vuông","mô tả chi tiết","chính xác","internet",
+  "đã tiến hành điều tra","sai lầm","đồ uống","coi là","một loại","thuốc","thay vì","theo",
+  "làm sâu","giải khát","rất","không thể thiếu","một phần","người Quảng Đông","trà thảo dược",
+  "hơi","đắng","thuốc Đông y",
+
+  "đi công tác","mang","khăn","kem đánh răng","đặt vào","khách sạn","miễn phí","cung cấp",
+  "nặng","luôn luôn","bảo vệ","môi trường","xung quanh","việc nhỏ","bắt đầu","máy bay","lái xe",
+  "đưa đến","sân bay","kẹt xe","nghiêm trọng","tàu điện ngầm","không chỉ","tiết kiệm",
+  "tiền xăng","ô nhiễm","không khí","nhà vệ sinh","bẩn","khách","để lại","nhanh nhất","dọn dẹp",
+  "thực sự","xin lỗi","bàn","dưới","trống","đồ uống","chai","hộp giấy","ngay lập tức","vứt đi",
+  "bất kể","sạch","vệ sinh","tốc độ","hoàn thành","nhưng",
+
+  "Trái đất","một giờ","hoạt động","sớm nhất","tắt đèn","ủng hộ","trong xưởng","thông báo",
+  "đã vậy","tăng ca","bảo vệ môi trường","bảo vệ môi trường","thực ra","nguyên nhân","tiết kiệm",
+  "dùng điện","ấm lên toàn cầu","quan tâm","túi nhựa","mang lại","tiện lợi","phổ biến",
+  "quá mức","nghiêm trọng","ô nhiễm môi trường","thế là","siêu thị","trung tâm thương mại",
+  "khách hàng","khuyến khích","mua","túi mua sắm","trách nhiệm","tự ti","thậm chí","từ chối",
+  "giảm","số lượng","làm gương","xa","thực tế","chỉ cần","máy điều hòa","nhiệt độ","bật",
+  "khi ra ngoài","nhớ","tắt","dùng điện","đi lại","giảm","ô nhiễm không khí","hình thành","rác",
+
+  "phân loại","thùng rác","vào thùng rác","thật sự","giảm","làm","đẹp","chơi piano","biểu diễn",
+  "tuyệt","cháu trai","kỳ nghỉ đông","tiệc năm mới","nhớ ra","giáo dục","xuất sắc","đồng hồ báo",
+  "reo","không tỉnh","vội","đưa đi học","vội","đi vệ sinh","chỉ trích","làm ra","quản lý thời gian",
+  "làm thay","tiêm","trông có vẻ","nói nhỏ","an ủi","khích lệ","khen","tuyệt đối không","nghi ngờ",
+  "kịp thời","quá trình","tính tích cực","thông qua",
+
+  "ném đồ","gõ","gây ra","tức giận","dừng lại","việc trong tay","ở bên con","sắp xếp đồ",
+  "làm rõ","trẻ em","lừa","học giả","nói dối","hiếu động","ngồi không yên","độ tuổi","nội dung",
+  "lười","ngu","cẩu thả","chỉ trích","xấu hổ","khuyến khích nói ra",
+
+  "thạc sĩ","tương lai","học tiến sĩ","visa","chứng minh","hộ chiếu","đại học nước ngoài",
+  "điền","đăng ký","biểu mẫu","thư mời","fax","đại sứ quán","số điện thoại","ông chủ","kinh nghiệm",
+  "quá trình","xúc động","chàng trai","ngạc nhiên","phóng viên","các loại","đại diện","to nhỏ",
+  "miếng đó","ngại","từ chối","nghỉ","thất vọng","ngoại ô","vé tàu","rốt cuộc","nơi khác",
+  "tôi làm hướng dẫn viên","không muốn","nhiệm vụ không thể hoàn thành","hiểu lầm","đau lòng",
+  "phù hợp","tha thứ","loại này","cảm thông",
+
+  "bắt đầu từ","trước giờ học","chuẩn bị trước","tìm ra","trọng điểm","qua loa","sau giờ học",
+  "nhớ","tự tin","bình tĩnh","kiêu ngạo","vĩnh viễn","thua","thắng","xung quanh","kém","tôn trọng",
+
+  "mát mẻ","gió","thổi","bãi cỏ","một lớp","dày","lá vàng","mùa thu","Hương Sơn","nhộn nhịp",
+  "nhiệt độ","giảm","thực vật","thu hút","du khách","phát thanh","nơi đẹp","Trường Thành",
+  "thì ra","ý hay","e rằng","lông","ôm","động vật","hơi","nuôi","làm","nhiệm vụ","kiên nhẫn",
+  "quen","nghiêm","tâm trạng","ở bên","khó chịu","chuyến","vườn thú","khoảng","hướng dẫn viên",
+  "châu Á","một trong","nghỉ hè","hổ","gấu trúc","lúc đó","đa số","gặp dịp","Ngày thiếu nhi",
+  "dẫn theo","lối vào","xếp hàng","cực kỳ","lanh lợi","thân thể",
+
+  "toàn thế giới","coi là","khác","tặng","trong xã hội","cạnh tranh","kỳ lạ","ánh nắng",
+  "thực vật","đạt được","thấp","mọc","do","điều kiện","khắp thế giới","ấm","độ ẩm","phát triển",
+  "khoảng","khu vực","đại dương","đáy biển","đa dạng","nàng tiên cá","câu chuyện","khoa học",
+  "nghiên cứu","phần đáy","các động vật","dù cho","vài km","vẫn","phát ra","ánh sáng","xếp hàng",
+  "đẹp lắm","như","trong mơ",
+
+  "cất cánh","hạ cánh","độc đáo","hot","tin tưởng","lẽ nào","tác giả","ghi nhớ","nội dung",
+  "cập nhật","bao gồm","kỹ thuật","nhưng","có hay không","dễ hiểu","tăng","giao thông","nghiêm túc",
+  "vẫn phải","nếu không","tìm kiếm","vài giây","giải quyết","cái này tiện hơn","theo điều tra",
+  "internet","phát triển","chịu không nổi","cách thức","viết nhật ký","hiểu rõ","tiết kiệm",
+  "dùng giấy","bảo vệ môi trường","an toàn","nhật ký online","thêm mật khẩu","cho phép","kỳ lạ",
+  "giấc mơ","trên cầu","lái qua","một chiếc xe","nguy hiểm","tiếp theo","cảnh sát","bắt giữ",
+  "kẻ xấu","nhớ được","đã mơ","khác biệt","sau khi tỉnh","rõ ràng","có lý","tương lai",
+  "thường khi","mặn","nước khoáng","tiến hành đối với","giải thích","thậm chí","chuyên biệt",
+  "vẫn còn","cách nói khoa học","giá","giảm","nhắn tin","dùng để","chơi game","thanh toán",
+  "đưa ra","địa chỉ","địa điểm","một chiếc","thế kỷ","xảy ra","khổng lồ","vài nghìn km",
+  "đi thuyền","vốn dĩ","gửi thư","ngay cả","bưu điện","bạn ở xa","nhận được","viết phong bì",
+  "ngắn","ngoài địa phương","website","bất kỳ","hiện đại","phát triển","gọi là","làng trái đất"
 ];
+
 
 
 
 // ===============================================================
 // Tạo danh sách object {w, py, vi}
 if(words.length !== pinyin.length || words.length !== meaning.length){
+  console.log("words:", words.length);
+  console.log("pinyin:", pinyin.length);
+  console.log("meaning:", meaning.length);
   alert("❌ 3 list không bằng nhau!");
 }
 
