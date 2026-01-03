@@ -21,6 +21,15 @@
 <div class="duong-ke"></div>
 
 <div class="quiz-wrap">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="progress" style="font-weight:bold; margin-bottom:5px;">
+        Câu: 0 / 0
+      </div>
+
+      <div id="score" style="font-weight:bold; margin-bottom:10px;">
+        Điểm: 0
+      </div>
+    </div>
     <div id="question"></div>
     <div id="options"></div>
     <div id="result"></div>
@@ -369,8 +378,12 @@ function shuffle(arr){
 let order = [...Array(vocab.length).keys()];
 shuffle(order);
 let idx = 0;
+let score = 0;
+const totalQuestions = vocab.length;
 
 function loadQ(){
+  document.getElementById("progress").innerText =
+  `Câu: ${idx + 1} / ${totalQuestions}`;
   const q = vocab[ order[idx] ];
 
   document.getElementById("question").innerText = "Từ: " + q.w;
@@ -399,29 +412,47 @@ function selectAns(chosen, correct, box){
   const res = document.getElementById("result");
 
   if(chosen.w === correct.w){
+    score++;
     box.style.background = "#c2f7c2";
     res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
   } else {
     box.style.background = "#ffb3b3";
     res.innerHTML =
-       "❌ Sai rồi.<br>" +
-       "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
-       "Pinyin: " + correct.py;
+      "❌ Sai rồi.<br>" +
+      "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+      "Pinyin: " + correct.py;
   }
 
-  // khóa hết option sau khi chọn
-  document.querySelectorAll(".option").forEach(o=> o.onclick=null);
+  document.getElementById("score").innerText =
+    `Điểm: ${score}`;
+
+  // khóa đáp án
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
 }
+
+
 
 function nextQ(){
   idx++;
-  if(idx >= vocab.length){
-    alert("Hết từ rồi fen!");
+
+  if(idx >= totalQuestions){
+    alert(
+      `🎉 Hoàn thành!\n` +
+      `Điểm của fen: ${score} / ${totalQuestions}`
+    );
+
+    // reset
     idx = 0;
+    score = 0;
     shuffle(order);
+
+    document.getElementById("score").innerText = "Điểm: 0";
   }
+
   loadQ();
 }
+
+
 
 loadQ();
 </script>
