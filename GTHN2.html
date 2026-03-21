@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK4</title>
+<link rel="stylesheet" href="CSS/styles.css">
+<link rel="stylesheet" href="CSS/responsive.css">
+</head>
+
+<body>
+<div class="header">
+<h2>GTHN 2</h2>
+<div class="nav-select">
+  <select onchange="location = this.value;">
+    <option selected disabled>Chuyển bộ từ vựng…</option>
+    <option value="GTHN.html">GTHN</option>
+    <option value="GTHN3.html">GTHN 3</option>
+    <option value="index.html">HSK</option>
+    <option value="TM.html">Thương mại</option>
+  </select>
+</div>
+</div>
+<div class="duong-ke"></div>
+<div class="quiz-wrap">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="progress" style="font-weight:bold; margin-bottom:5px;">
+        Câu: 0 / 0
+      </div>
+
+      <div id="score" style="font-weight:bold; margin-bottom:10px;">
+        Điểm: 0
+      </div>
+    </div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"爱好", "安静", "白色", "半", "帮", "帮忙", "报名", "北边", "毕业", "遍", "... 边", "表演", "病", "博物馆", "不错", "不用", "参观", "参加", "操场", "查", "差", "长", "常(常)", "唱", "超市", "出发", "出来", "床", "次", "从", "错", "打", "打算", "打听", "打折", "大家", "代表", "带", "当", "当然", "到", "得", "灯", "地方", "点(钟)", "电脑", "电视", "电视剧", "电视台", "电影", "东边", "东西", "懂", "短", "锻炼", "对", "多", "多大", "发", "发烧", "翻译", "飞", "飞机", "非常", "肥", "分(钟)", "复习", "感到", "感冒", "感兴趣", "刚才", "跟", "公园", "狗", "拐", "光临", "广场", "过", "汉英", "好看", "号", "合适", "和平", "盒", "红绿灯", "后边", "后年", "花", "画", "画儿", "回来", "会", "火车", "或者", "集合", "挤", "坚持", "浇", "教", "叫", "教室", "节", "节目", "借", "今年", "进步", "近", "京剧", "就", "就", "举行", "开始", "看", "看病", "咳嗽", "可能", "可以", "可以", "刻", "课", "课文", "口语", "快", "快乐", "来", "篮球", "劳驾", "离", "里边", "练习", "聊天儿", "流利", "录音", "路", "旅行", "绿", "马路", "没问题", "没有", "每", "门", "们", "米", "明年", "拿", "哪里", "那么", "南边", "能", "年", "年级", "努力", "爬", "派", "胖", "跑", "跑步", "骑", "起", "起床", "前", "前边", "浅", "请假", "球", "曲别针", "去年", "然后", "让", "认真", "山", "上边", "上车", "上课", "上网", "深", "生词", "生日", "时候", "时间", "事儿", "试", "收", "收发", "瘦", "书店", "书法", "舒服", "属", "水平", "睡觉", "顺便", "宿舍", "岁", "台", "太极拳", "谈", "特別", "疼", "提高", "体育", "替", "听力", "听说", "头", "头疼", "团", "外边", "玩儿", "晚", "晚饭", "晚会", "晚上", "网", "往", "微信", "为", "为什么", "文化", "问题", "午饭", "西边", "洗", "洗澡", "喜欢", "下", "下边", "下车", "下课", "现在", "想", "小时", "心情", "行", "兴趣", "休息", "修", "学期", "业余", "一定", "以后", "以前", "一点儿", "一起", "一直", "意思", "因为", "音乐", "用", "邮件", "游戏", "有时候", "又...又...", "右", "右边", "愉快", "羽绒服", "预习", "远", "愿意", "月", "阅读", "运动", "再", "在", "咱们", "早", "早饭", "早上", "这么", "正", "正好", "正在", "中间", "种", "猪", "祝", "祝你生日快乐", "准", "准备", "准时", "资料", "自己", "综合", "总(是)", "走", "足球", "足球场", "左", "左边", "坐", "座", "《读者》", "和平公园", "人民广场", "山本", "上海", "田中", "珍妮"
+
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"àihào", "ānjìng", "báisè", "bàn", "bāng", "bāng máng", "bào míng", "běibian", "bì yè", "biàn", "bian", "biǎoyǎn", "bìng", "bówùguǎn", "búcuò", "búyòng", "cānguān", "cānjiā", "cāochǎng", "chá", "chà", "cháng", "cháng(cháng)", "chàng", "chāoshì", "chūfā", "chūlai", "chuáng", "cì", "cóng", "cuò", "dǎ", "dǎsuàn", "dǎting", "dǎ zhé", "dàjiā", "dàibiǎo", "dài", "dāng", "dāngrán", "dào", "de", "dēng", "dìfang", "diǎn (zhōng)", "diànnǎo", "diànshì", "diànshìjù", "diànshìtái", "diànyǐng", "dōngbian", "dōngxi", "dǒng", "duǎn", "duànliàn", "duì", "duō", "duō dà", "fā", "fā shāo", "fānyì", "fēi", "fēijī", "fēicháng", "féi", "fēn (zhōng)", "fùxí", "gǎndào", "gǎnmào", "gǎn xìngqù", "gāngcái", "gēn", "gōngyuán", "gǒu", "guǎi", "guānglín", "guǎngchǎng", "guò", "Hàn-Yīng", "hǎokàn", "hào", "héshì", "hépíng", "hé", "hónglǜdēng", "hòubian", "hòunián", "huā", "huà", "huàr", "huílai", "huì", "huǒchē", "huòzhě", "jíhé", "jǐ", "jiānchí", "jiāo", "jiāo", "jiào", "jiàoshì", "jié", "jiémù", "jiè", "jīnnián", "jìnbù", "jìn", "jīngjù", "jiù", "jiù", "jǔxíng", "kāishǐ", "kàn", "kàn bìng", "késou", "kěnéng", "kěyǐ", "kěyǐ", "kè", "kè", "kèwén", "kǒuyǔ", "kuài", "kuàilè", "lái", "lánqiú", "láo jià", "lí", "lǐbian", "liànxí", "liáo tiānr", "liúli", "lùyīn", "lù", "lǚxíng", "lǜ", "mǎlù", "méi wèntí", "méiyǒu", "měi", "mén", "men", "mǐ", "míngnián", "ná", "nǎli", "nàme", "nánbian", "néng", "nián", "niánjí", "nǔlì", "pá", "pài", "pàng", "pǎo", "pǎo bù", "qí", "qǐ", "qǐ chuáng", "qián", "qiánbian", "qiǎn", "qǐng jià", "qiú", "qūbiézhēn", "qùnián", "ránhòu", "ràng", "rènzhēn", "shān", "shàngbian", "shàng chē", "shàng kè", "shàng wǎng", "shēn", "shēngcí", "shēngrì", "shíhou", "shíjiān", "shìr", "shì", "shōu", "shōufā", "shòu", "shūdiàn", "shūfǎ", "shūfu", "shǔ", "shuǐpíng", "shuì jiào", "shùnbiàn", "sùshè", "suì", "tái", "tàijíquán", "tán", "tèbié", "téng", "tígāo", "tǐyù", "tì", "tīnglì", "tīngshuō", "tóu", "tóu téng", "tuán", "wàibian", "wánr", "wǎn", "wǎnfàn", "wǎnhuì", "wǎnshang", "wǎng", "wǎng", "wēixìn", "wèi", "wèi shénme", "wénhuà", "wèntí", "wǔfàn", "xībian", "xǐ", "xǐ zǎo", "xǐhuan", "xià", "xiàbian", "xià chē", "xià kè", "xiànzài", "xiǎng", "xiǎoshí", "xīnqíng", "xíng", "xìngqù", "xiūxi", "xiū", "xuéqī", "yèyú", "yídìng", "yǐhòu", "yǐqián", "yìdiǎnr", "yìqǐ", "yìzhí", "yìsi", "yīnwèi", "yīnyuè", "yòng", "yóujiàn", "yóuxì", "yǒu shíhou", "yòu...yòu...", "yòu", "yòubian", "yúkuài", "yǔróngfú", "yùxí", "yuǎn", "yuànyì", "yuè", "yuèdú", "yùndòng", "zài", "zài", "zánmen", "zǎo", "zǎofàn", "zǎoshang", "zhème", "zhèng", "zhènghǎo", "zhèngzài", "zhōngjiān", "zhǒng", "zhū", "zhù", "zhù nǐ shēngrì kuàilè", "zhǔn", "zhǔnbèi", "zhǔnshí", "zīliào", "zìjǐ", "zōnghé", "zǒng (shì)", "zǒu", "zúqiú", "zúqiúchǎng", "zuǒ", "zuǒbian", "zuò", "zuò", "Dúzhě", "Hépíng Gōngyuán", "Rénmín Guǎngchǎng", "Shānběn", "Shànghǎi", "Tiánzhōng", "Zhēnní"
+
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"Sở thích", "Im lặng", "Trắng", "Một nửa", "giúp đỡ", "giúp đỡ", "Đăng ký", "Phía bắc", "tốt nghiệp", "khắp nơi", "... bên", "Hiệu suất", "đau ốm", "bảo tàng", "Tốt", "Không cần thiết", "thăm nom", "tham gia", "sân chơi", "kiểm tra", "Sự khác biệt", "dài", "Thường xuyên)", "Hát", "siêu thị", "Khởi hành", "đi ra ngoài", "giường", "Hạng hai", "từ", "sai", "tiết tấu", "Có ý định", "hỏi về", "Giảm giá", "Mọi người", "đại diện", "mang đến", "khi", "chắc chắn", "đến", "phải", "đèn", "địa điểm", "Giờ", "máy tính", "tivi", "phim truyền hình", "Đài truyền hình", "Bộ phim", "Phía đông", "điều", "Hiểu", "ngắn", "bài tập", "Phải", "nhiều", "Kích thước bao nhiêu", "tóc", "sốt", "dịch", "bay", "máy bay", "Rất", "Mập", "phút)", "ôn tập", "cảm thấy", "lạnh lẽo", "thú vị", "Vừa nãy", "Và", "vườn", "chó", "Xoay", "Thăm nom", "quảng trường", "Vượt qua", "Tiếng Trung-Tiếng Anh", "Đẹp", "Con số", "thích hợp", "Hòa bình", "hộp", "đèn giao thông", "phía sau", "Năm sau nữa", "hoa", "bức vẽ", "Bức vẽ", "trở lại", "cuộc họp", "xe lửa", "hoặc", "tập trung", "vắt kiệt", "kiên trì trong", "Rót", "dạy bảo", "Gọi", "lớp học", "Lễ hội", "chương trình", "vay mượn", "Năm nay", "tiến triển", "đóng", "Kinh kịch Bắc Kinh", "Ngay lập tức", "Ngay lập tức", "Giữ", "bắt đầu", "Nhìn", "đi khám bác sĩ", "ho", "khả thi", "Có thể", "Có thể", "chạm khắc", "lớp học", "chữ", "Ngôn ngữ nói", "nhanh", "hạnh phúc", "Đến", "bóng rổ", "Xin lỗi", "Rời khỏi", "bên trong", "luyện tập", "Trò chuyện", "thông thạo", "ghi âm", "đường", "du lịch", "màu xanh lá", "đường", "Không vấn đề", "KHÔNG", "Mọi", "Cửa", "Họ", "cơm", "năm tới", "lấy", "Ở đâu", "Vì thế", "Phía nam", "có thể", "Năm", "cấp", "cố gắng", "leo", "nhóm", "mập", "chạy", "đang chạy", "lái", "tăng lên", "thức dậy", "phía trước", "đằng trước", "nông", "Xin nghỉ phép", "quả bóng", "kẹp giấy", "năm ngoái", "Sau đó", "cho phép", "nghiêm trọng", "Núi", "Bên trên", "Lên xe buýt", "Tham dự lớp học", "internet", "sâu", "Từ mới", "Sinh nhật", "khi", "thời gian", "điều", "thử", "nhận được", "Gửi và nhận", "gầy", "hiệu sách", "thư pháp", "Thoải mái", "chi", "mức độ", "ngủ", "Nhân tiện", "ký túc xá", "tuổi", "tháp", "Thái cực quyền", "nói chuyện", "rất", "nỗi đau", "cải thiện", "giáo dục thể chất", "vì", "nghe", "Tôi nghe nói", "cái đầu", "Đau đầu", "nhóm", "ngoài", "chơi", "Đêm", "bữa tối", "buổi tiệc", "đêm", "mạng lưới", "Quá khứ", "WeChat", "vì", "Tại sao", "văn hoá", "câu hỏi", "bữa trưa", "Tây", "rửa", "bồn tắm", "giống", "Xuống", "dưới", "rời đi", "Ra khỏi lớp học xong", "Hiện nay", "nghĩ", "Giờ", "Cảm giác", "ĐƯỢC RỒI", "quan tâm", "nghỉ ngơi", "xây dựng", "học kỳ", "nghiệp dư", "phải", "sau đó", "trước", "một chút", "Cùng nhau", "Luôn luôn", "nghĩa là", "bởi vì", "âm nhạc", "sử dụng", "thư", "trò chơi", "Thỉnh thoảng", "Lại nữa...lại nữa...", "Phải", "Phải", "vui sướng", "áo khoác lông vũ", "Xem trước", "Xa", "sẵn sàng", "mặt trăng", "đọc", "thể thao", "Lại", "hiện hữu", "chúng tôi", "buổi sáng", "bữa sáng", "Buổi sáng", "Vì thế", "chỉ", "Vừa phải", "Đang tiến hành", "ở giữa", "loại", "con lợn", "ước", "Chúc mừng sinh nhật bạn", "cho phép", "Chuẩn bị", "đúng giờ", "vật liệu", "Sở hữu", "toàn diện", "luôn luôn)", "Đi bộ", "bóng đá", "sân bóng đá", "Bên trái", "bên trái", "ngồi", "ghế", "người đọc", "Công viên Hòa bình", "Quảng trường Nhân dân", "Yamamoto", "Thượng Hải", "Tanaka", "Jenny"
+
+];
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  console.info(words.length)
+  console.info(pinyin.length)
+  console.info(meaning.length)
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+let score = 0;
+const totalQuestions = vocab.length;
+
+function loadQ(){
+  document.getElementById("progress").innerText =
+  `Câu: ${idx + 1} / ${totalQuestions}`;
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    score++;
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+      "❌ Sai rồi.<br>" +
+      "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+      "Pinyin: " + correct.py;
+  }
+
+  document.getElementById("score").innerText =
+    `Điểm: ${score}`;
+
+  // khóa đáp án
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
+}
+
+
+
+function nextQ(){
+  idx++;
+
+  if(idx >= totalQuestions){
+    alert(
+      `🎉 Hoàn thành!\n` +
+      `Điểm của fen: ${score} / ${totalQuestions}`
+    );
+
+    // reset
+    idx = 0;
+    score = 0;
+    shuffle(order);
+
+    document.getElementById("score").innerText = "Điểm: 0";
+  }
+
+  loadQ();
+}
+
+
+
+loadQ();
+</script>
+</body>
+</html>

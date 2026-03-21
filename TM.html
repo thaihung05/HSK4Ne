@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK4</title>
+<link rel="stylesheet" href="CSS/styles.css">
+<link rel="stylesheet" href="CSS/responsive.css">
+</head>
+
+<body>
+<div class="header">
+<h2>Thương mại</h2>
+<div class="nav-select">
+  <select onchange="location = this.value;">
+    <option selected disabled>Chuyển bộ từ vựng…</option>
+    <option value="index.html">HSK</option>
+    <option value="GTHN.html">GTHN</option>
+    <option value="TM.html">Thương mại</option>
+  </select>
+</div>
+</div>
+<div class="duong-ke"></div>
+<div class="quiz-wrap">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="progress" style="font-weight:bold; margin-bottom:5px;">
+        Câu: 0 / 0
+      </div>
+
+      <div id="score" style="font-weight:bold; margin-bottom:10px;">
+        Điểm: 0
+      </div>
+    </div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"刘波", "通过", "了", "远大公司", "的", "面试", "成为", "这家", "公司", "销售部", "经理", "在", "正式", "上班", "之前", "王芊", "先", "给", "他", "介绍", "了", "公司", "各", "机构", "负责人", "的", "情况", "我", "刚", "来", "公司", "有什么", "不懂", "的", "地方", "还", "要", "向", "王小姐", "请教", "您", "千万", "别", "客气", "以后", "我们", "要", "经常", "在一起", "工作", "了", "我", "比", "您", "早", "来", "几天", "有什么", "需要", "帮忙", "的", "尽管", "说", "肯定", "已经", "知道", "董事长", "布莱克", "先生", "全世界", "十几个", "国家", "都", "分公司", "负责", "整个", "技术", "产品", "开发", "跟", "在一起", "压力", "一定", "很大", "因为", "对待", "自己的", "下属", "非常", "宽厚", "今天", "不在", "出差", "去了", "得", "等到", "下星期一", "才", "回来", "王京京", "总经理", "张小丽", "秘书", "刘敏", "生产部经理", "白云飞", "人力资源部主管", "程中华", "市场部经理", "黄婷", "财务部经理", "David Burton 总裁", "你本人 总裁助理", "Peter Yu 市场部经理", "Susan Polson 财务部经理", "John Harkins 人事部经理", "Nancy Tong 生产部经理", "远大公司", "来了", "一批", "参观者", "秘书", "王萍", "正在", "给大家", "介绍", "公司的", "组织机构", "情况", "先", "代表", "公司", "对", "大家的到来", "表示", "了", "欢迎", "然后", "将", "客人", "带到", "展览室", "假如", "某", "办公室公司", "总裁", "总裁助理", "新来了一位经理", "组织机构", "组织结构图", "", "今天", "是", "第一（天）", "到", "上班", "所以", "很早", "就", "人力资源部", "经理", "把", "带到", "销售部", "您好", "啊", "小刘", "这么", "来", "啦", "比", "还", "想", "早点儿", "熟悉", "一下儿", "环境", "领", "去", "看看", "办公室", "除了…以外", "别的", "职员", "没到", "早上好", "介绍", "这位", "新来的", "咱们", "业务员", "以后", "主要", "由", "协助", "工作", "欢迎", "小姐", "多多", "帮助", "具体情况", "有什么事", "找", "离开", "那", "先", "办公设备", "办公桌", "特意", "为", "真皮", "转椅", "试试", "舒服", "不错", "对了", "抽屉", "准备", "办公用品", "够不够", "圆珠笔", "自动铅笔", "记号笔", "涂改液", "订书器", "订书钉", "橡皮", "尺子", "即时贴", "优盘", "移动硬盘", "活页夹", "暂时", "电话号码", "内线电话", "国际直拨电话", "电脑", "软件", "杀毒软件", "版本", "安装", "激光打印机", "共享", "复印", "复印室", "传真机", "同事", "正好", "到了", "年底", "远景公司", "采购部", "请", "各部门", "将", "自己", "第二年", "所需要的", "物品", "列个", "清单", "交上来", "采购部经理", "郑先生", "正在", "征求", "大家的意见", "开始", "讨论", "起来", "有的", "说", "希望", "换个", "新电脑", "需要", "扫描仪", "投影仪", "数码相机", "还有人", "激光打印机", "硒鼓", "已经", "用了很长时间", "复印纸", "不够了", "耗材", "总", "一趟一趟地", "领取", "很不方便", "为", "各个办公室", "多配备一些", "也有人", "提出", "应该", "买", "一些", "新的", "正版的", "办公软件", "郑经理", "一一", "记下", "并", "这次", "要购买的东西", "比较多", "因此", "资金", "在…会上", "办公会", "讨论一下儿", "下周", "就", "意见", "反映上去", "王萍", "刚", "上班", "一会儿", "她", "桌子上", "的", "电话", "就", "响了", "接电话", "喂", "你好", "远大公司", "古经理", "请问", "陈总", "在吗", "您", "是", "哪位", "找", "他", "有什么事", "我是", "新华公司", "古大成", "想", "跟", "约个时间", "见面", "讨论", "一下儿", "两家公司", "合并", "问题", "你看", "这个星期", "有时间", "呀", "稍等", "可以吗", "好的", "通过", "内线电话", "找到", "谈", "…的事", "陈方宇", "看一下儿", "日程安排", "替", "安排", "一个时间", "查看", "了…以后", "又", "接起", "星期三", "星期四", "下午", "上午", "以后", "什么时候", "对您", "比较", "合适", "嗯", "早一点儿", "那就…吧", "请", "转告", "准时", "去", "办公室", "一定", "再见"
+
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"Liú Bō", "tōngguò", "le", "Yuǎndà gōngsī", "de", "miànshì", "chéngwéi", "zhè jiā", "gōngsī", "xiāoshòubù", "jīnglǐ", "zài", "zhèngshì", "shàngbān", "zhīqián", "Wáng Qiān", "xiān", "gěi", "tā", "jièshào", "le", "gōngsī", "gè", "jīgòu", "fùzérén", "de", "qíngkuàng", "wǒ", "gāng", "lái", "gōngsī", "yǒu shénme", "bù dǒng", "de", "dìfang", "hái", "yào", "xiàng", "Wáng xiǎojiě", "qǐngjiào", "nín", "qiānwàn", "bié", "kèqi", "yǐhòu", "wǒmen", "yào", "jīngcháng", "zài yìqǐ", "gōngzuò", "le", "wǒ", "bǐ", "nín", "zǎo", "lái", "jǐ tiān", "yǒu shénme", "xūyào", "bāngmáng", "de", "jǐnguǎn", "shuō", "kěndìng", "yǐjīng", "zhīdào", "dǒngshìzhǎng", "Bùláikè", "xiānsheng", "quán shìjiè", "shí jǐ gè", "guójiā", "dōu", "fēngōngsī", "fùzé", "zhěnggè", "jìshù", "chǎnpǐn", "kāifā", "gēn", "zài yìqǐ", "yālì", "yídìng", "hěn dà", "yīnwèi", "duìdài", "zìjǐ de", "xiàshǔ", "fēicháng", "kuānhòu", "jīntiān", "bú zài", "chūchāi", "qù le", "děi", "děng dào", "xià xīngqīyī", "cái", "huílái", "Wáng Jīngjīng", "zǒng jīnglǐ", "Zhāng Xiǎolì", "mìshū", "Liú Mǐn", "shēngchǎn bù jīnglǐ", "Bái Yúnfēi", "rénlì zīyuán bù zhǔguǎn", "Chéng Zhōnghuá", "shìchǎng bù jīnglǐ", "Huáng Tíng", "cáiwù bù jīnglǐ", "zǒngcái", "nǐ běnrén / zǒngcái zhùlǐ", "shìchǎng bù jīnglǐ", "cáiwù bù jīnglǐ", "rénshì bù jīnglǐ", "shēngchǎn bù jīnglǐ", "Yuǎndà gōngsī", "lái le", "yì pī", "cānguānzhě", "mìshū", "Wáng Píng", "zhèngzài", "gěi dàjiā", "jièshào", "gōngsī de", "zǔzhī jīgòu", "qíngkuàng", "xiān", "dàibiǎo", "gōngsī", "duì", "dàjiā de dàolái", "biǎoshì", "le", "huānyíng", "ránhòu", "jiāng", "kèrén", "dài dào", "zhǎnlǎnshì", "jiǎrú", "mǒu", "bàngōngshì gōngsī", "zǒngcái", "zǒngcái zhùlǐ", "xīn lái le yí wèi jīnglǐ", "zǔzhī jīgòu", "zǔzhī jiégòu tú", "", "jīntiān", "shì", "dì-yī (tiān)", "dào", "shàngbān", "suǒyǐ", "hěn zǎo", "jiù", "rénlì zīyuánbù", "jīnglǐ", "bǎ", "dài dào", "xiāoshòubù", "nín hǎo", "a", "Xiǎo Liú", "zhème", "lái", "la", "bǐ", "hái", "xiǎng", "zǎodiǎnr", "shúxī", "yíxiàr", "huánjìng", "lǐng", "qù", "kànkan", "bàngōngshì", "chúle… yǐwài", "bié de", "zhíyuán", "méi dào", "zǎoshang hǎo", "jièshào", "zhè wèi", "xīn lái de", "zánmen", "yèwùyuán", "yǐhòu", "zhǔyào", "yóu", "xiézhù", "gōngzuò", "huānyíng", "xiǎojiě", "duōduō", "bāngzhù", "jùtǐ qíngkuàng", "yǒu shénme shì", "zhǎo", "líkāi", "nà", "xiān", "bàngōng shèbèi", "bàngōngzhuō", "tèyì", "wèi", "zhēnpí", "zhuǎnyǐ", "shìshi", "shūfu", "búcuò", "duì le", "chōuti", "zhǔnbèi", "bàngōng yòngpǐn", "gòu bú gòu", "yuánzhūbǐ", "zìdòng qiānbǐ", "jìhàobǐ", "túgǎiyè", "dìngshūqì", "dìngshūdīng", "xiàngpí", "chǐzi", "jíshítiē", "yōupán", "yídòng yìngpán", "huóyèjiā", "zànshí", "diànhuà hàomǎ", "nèixiàn diànhuà", "guójì zhíbō diànhuà", "diànnǎo", "ruǎnjiàn", "shādú ruǎnjiàn", "bǎnběn", "ānzhuāng", "jīguāng dǎyìnjī", "gòngxiǎng", "fùyìn", "fùyìnshì", "chuánzhēnjī", "tóngshì", "zhènghǎo", "dào le", "niándǐ", "Yuǎnjǐng gōngsī", "cǎigòubù", "qǐng", "gè bùmén", "jiāng", "zìjǐ", "dì-èr nián", "suǒ xūyào de", "wùpǐn", "liè gè", "qīngdān", "jiāo shànglái", "cǎigòubù jīnglǐ", "Zhèng xiānsheng", "zhèngzài", "zhēngqiú", "dàjiā de yìjiàn", "kāishǐ", "tǎolùn", "qǐlái", "yǒu de", "shuō", "xīwàng", "huàn gè", "xīn diànnǎo", "xūyào", "sǎomiáoyí", "tóuyǐngyí", "shùmǎ xiàngjī", "hái yǒu rén", "jīguāng dǎyìnjī", "xīgǔ", "yǐjīng", "yòng le hěn cháng shíjiān", "fùyìnzhǐ", "bú gòu le", "hàocái", "zǒng", "yí tàng yí tàng de", "lǐngqǔ", "hěn bù fāngbiàn", "wèi", "gège bàngōngshì", "duō pèibèi yìxiē", "yě yǒu rén", "tíchū", "yīnggāi", "mǎi", "yìxiē", "xīn de", "zhèngbǎn de", "bàngōng ruǎnjiàn", "Zhèng jīnglǐ", "yīyī", "jì xià", "bìng", "zhè cì", "yào gòumǎi de dōngxi", "bǐjiào duō", "yīncǐ", "zījīn", "zài … huì shàng", "bàngōnghuì", "tǎolùn yíxiàr", "xià zhōu", "jiù", "yìjiàn", "fǎnyìng shàngqù", "Wáng Píng", "gāng", "shàngbān", "yíhuìr", "tā", "zhuōzi shàng", "de", "diànhuà", "jiù", "xiǎng le", "jiē diànhuà", "wèi", "nǐ hǎo", "Yuǎndà gōngsī", "Gǔ jīnglǐ", "qǐngwèn", "Chén zǒng", "zài ma", "nín", "shì", "nǎ wèi", "zhǎo", "tā", "yǒu shénme shì", "wǒ shì", "Xīnhuá gōngsī", "Gǔ Dàchéng", "xiǎng", "gēn", "yuē gè shíjiān", "jiànmiàn", "tǎolùn", "yíxiàr", "liǎng jiā gōngsī", "hébìng", "wèntí", "nǐ kàn", "zhè ge xīngqī", "yǒu shíjiān", "ya", "shāo děng", "kěyǐ ma", "hǎo de", "tōngguò", "nèixiàn diànhuà", "zhǎodào", "tán", "de shì", "Chén Fāngyǔ", "kàn yíxiàr", "rìchéng ānpái", "tì", "ānpái", "yí gè shíjiān", "chákàn", "le… yǐhòu", "yòu", "jiē qǐ", "xīngqī sān", "xīngqī sì", "xiàwǔ", "shàngwǔ", "yǐhòu", "shénme shíhou", "duì nín", "bǐjiào", "héshì", "ń", "zǎo yìdiǎnr", "nà jiù… ba", "qǐng", "zhuǎngào", "zhǔnshí", "qù", "bàngōngshì", "yídìng", "zàijiàn"
+
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"Lưu Ba (tên người)", "thông qua, vượt qua", "trợ từ hoàn thành", "Công ty Viễn Đại", "trợ từ sở hữu", "phỏng vấn", "trở thành", "công ty này", "công ty", "phòng kinh doanh", "quản lý, trưởng bộ phận", "tại, trong", "chính thức", "đi làm", "trước khi", "Vương Thiến", "trước", "cho", "anh ấy", "giới thiệu", "đã", "công ty", "mỗi, các", "cơ cấu, tổ chức", "người phụ trách", "của", "tình hình, thông tin", "tôi", "vừa mới", "đến", "công ty", "có gì", "không hiểu", "trợ từ", "chỗ, điểm", "còn", "cần, phải", "với, hướng tới", "cô Vương", "thỉnh giáo", "anh/chị (kính ngữ)", "tuyệt đối", "đừng", "khách sáo", "sau này", "chúng ta", "sẽ", "thường xuyên", "cùng nhau", "làm việc", "rồi", "tôi", "so với", "anh/chị", "sớm", "đến", "vài ngày", "có gì", "cần", "giúp đỡ", "trợ từ", "cứ", "nói", "chắc chắn", "đã", "biết", "chủ tịch HĐQT", "Black (tên riêng)", "ông", "toàn thế giới", "hơn mười", "quốc gia", "đều", "chi nhánh", "phụ trách", "toàn bộ", "kỹ thuật", "sản phẩm", "phát triển", "cùng, với", "cùng nhau", "áp lực", "chắc chắn", "rất lớn", "bởi vì", "đối xử", "của mình", "cấp dưới", "vô cùng", "khoan dung", "hôm nay", "không ở", "đi công tác", "đi rồi", "phải", "đợi đến", "thứ Hai tuần sau", "mãi đến mới", "quay về", "(tên người) Vương Kinh Kinh", "Tổng giám đốc / Giám đốc điều hành (General Manager)", "(tên người) Trương Tiểu Lệ", "Thư ký", "(tên người) Lưu Mẫn", "Quản lý/Trưởng phòng Sản xuất", "(tên người) Bạch Vân Phi", "Trưởng bộ phận/giám sát Phòng Nhân sự (HR Supervisor)", "(tên người) Trình Trung Hoa", "Trưởng phòng/Quản lý Marketing (phòng Thị trường)", "(tên người) Hoàng Đình", "Trưởng phòng/Quản lý Tài vụ – Tài chính (Finance)", "David Burton – Tổng裁 (CEO/Chủ tịch điều hành)", "Chính bạn – Trợ lý Tổng裁", "Peter Yu – Trưởng phòng Thị trường/Marketing", "Susan Polson – Trưởng phòng Tài chính/Tài vụ", "John Harkins – Trưởng phòng Nhân sự", "Nancy Tong – Trưởng phòng Sản xuất", "công ty Viễn Đại", "đã đến (đã tới)", "một đoàn/một nhóm", "người tham quan", "thư ký", "Vương Bình", "đang (nhấn mạnh đang diễn ra)", "cho mọi người", "giới thiệu", "của công ty", "cơ cấu tổ chức", "tình hình", "trước tiên", "đại diện / thay mặt", "công ty", "đối với", "sự mọi người đến", "bày tỏ", "đánh dấu hoàn thành", "chào mừng", "sau đó", "đem/đưa (cấu trúc “把/将”)", "khách", "dẫn/đưa đến", "phòng triển lãm", "giả sử / nếu như", "một … nào đó (không nêu cụ thể)", "công ty văn phòng / khối văn phòng", "tổng giám đốc / CEO / chủ tịch điều hành (tùy ngữ cảnh)", "trợ lý tổng giám đốc (Executive/CEO Assistant)", "mới đến một vị quản lý / có một quản lý mới", "cơ cấu tổ chức", "sơ đồ cơ cấu tổ chức (organizational chart)", "", "hôm nay", "là", "ngày đầu tiên", "đến", "đi làm", "vì vậy / nên", "rất sớm", "đã… rồi / nhấn mạnh sớm", "phòng nhân sự", "quản lý / trưởng phòng", "cấu trúc “đem/đưa”", "dẫn / đưa đến", "phòng kinh doanh", "xin chào (kính ngữ)", "à / ồ", "Tiểu Lưu (gọi thân mật)", "như vậy", "đến", "trợ từ cuối câu (thân mật)", "so với", "còn / vẫn", "muốn", "sớm hơn một chút", "làm quen", "một chút", "môi trường", "dẫn đi", "đi", "xem thử", "văn phòng", "ngoài… ra", "khác", "nhân viên", "chưa đến", "chào buổi sáng", "giới thiệu", "vị này", "mới đến", "chúng ta", "nhân viên kinh doanh", "sau này", "chủ yếu", "do", "hỗ trợ", "công việc", "chào mừng", "cô", "nhiều", "giúp đỡ", "tình hình cụ thể", "có việc gì", "tìm", "rời đi", "vậy", "trước tiên", "thiết bị văn phòng", "bàn làm việc", "đặc biệt", "vì", "da thật", "ghế xoay", "thử", "thoải mái", "không tệ", "à đúng rồi", "ngăn kéo", "chuẩn bị", "đồ dùng văn phòng", "đủ hay không", "bút bi", "bút chì bấm", "bút đánh dấu", "nước xóa", "máy bấm ghim", "ghim bấm", "cục tẩy", "thước", "giấy note dán", "USB", "ổ cứng di động", "bìa/kẹp hồ sơ", "tạm thời", "số điện thoại", "điện thoại nội bộ", "điện thoại quốc tế", "máy tính", "phần mềm", "phần mềm diệt virus", "phiên bản", "cài đặt", "máy in laser", "dùng chung", "photocopy", "phòng photocopy", "máy fax", "đồng nghiệp", "tiện thể / vừa hay", "đã đến (mốc thời gian đã tới)", "cuối năm", "công ty Viễn Cảnh", "phòng thu mua / mua sắm", "mời / đề nghị / yêu cầu (lịch sự)", "các bộ phận", "đem/đưa (đưa tân ngữ ra trước để xử lý)", "bản thân / của mình", "năm sau / năm kế tiếp", "những cái cần", "vật phẩm / đồ dùng", "lập / liệt kê một…", "danh sách", "nộp lên", "trưởng phòng thu mua", "ông Trịnh", "đang (hiện tại tiếp diễn)", "trưng cầu / thu thập", "ý kiến của mọi người", "bắt đầu", "thảo luận", "(bổ ngữ) bắt đầu rộ lên", "có người thì…", "nói", "hy vọng", "đổi một cái", "máy tính mới", "cần", "máy quét", "máy chiếu", "máy ảnh kỹ thuật số", "còn có người", "máy in laser", "hộp mực / trống mực", "đã", "dùng rất lâu", "giấy photocopy", "không đủ nữa", "vật tư tiêu hao", "cứ luôn / lúc nào cũng", "từng chuyến từng chuyến", "lãnh / nhận", "rất bất tiện", "cho / vì", "từng văn phòng", "trang bị thêm một ít", "cũng có người", "đề xuất / nêu ra", "nên / cần phải", "mua", "một số", "mới", "bản quyền / chính hãng", "phần mềm văn phòng", "quản lý Trịnh", "từng cái một / lần lượt", "ghi lại", "và / đồng thời", "lần này", "những thứ cần mua", "khá nhiều", "vì vậy / do đó", "kinh phí / vốn", "trong cuộc họp", "cuộc họp văn phòng", "thảo luận một chút", "tuần sau", "sẽ (nhấn mạnh đúng thời điểm)", "ý kiến", "phản ánh / trình lên", "Vương Bình (tên người)", "vừa mới", "đi làm / vào ca", "một lát / một lúc", "cô ấy", "trên bàn", "trợ từ sở hữu/định ngữ", "điện thoại", "liền / ngay", "reo lên / đổ chuông", "nghe máy / nhấc máy", "alo", "xin chào", "công ty Viễn Đại", "quản lý Cổ", "xin hỏi", "tổng giám đốc Trần", "có ở đó không", "ngài / ông / bà (kính ngữ)", "là", "vị nào / ai (lịch sự)", "tìm / gọi", "anh ấy / ông ấy", "có việc gì", "tôi là", "công ty Tân Hoa", "Cổ Đại Thành", "muốn / dự định", "với / cùng", "hẹn một thời gian", "gặp mặt", "thảo luận", "một chút", "hai công ty", "sáp nhập / hợp nhất", "vấn đề", "bạn xem", "tuần này", "có thời gian / rảnh", "trợ từ (nhận ra)", "đợi một lát", "được không", "được / vâng", "thông qua", "điện thoại nội bộ", "tìm được / liên lạc được", "nói / bàn", "chuyện về…", "Trần Phương Vũ", "xem một chút", "lịch trình", "thay cho / giúp", "sắp xếp", "một thời gian / khung giờ", "xem / kiểm tra", "sau khi…", "lại", "nhấc máy", "thứ Tư", "thứ Năm", "buổi chiều", "buổi sáng", "sau", "khi nào", "đối với ngài", "tương đối", "phù hợp", "ừ / ừm", "sớm hơn một chút", "vậy thì… nhé", "xin / nhờ (lịch sự)", "chuyển lời", "đúng giờ", "đi", "văn phòng", "nhất định", "tạm biệt"
+
+];
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  console.info(words.length)
+  console.info(pinyin.length)
+  console.info(meaning.length)
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+let score = 0;
+const totalQuestions = vocab.length;
+
+function loadQ(){
+  document.getElementById("progress").innerText =
+  `Câu: ${idx + 1} / ${totalQuestions}`;
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    score++;
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+      "❌ Sai rồi.<br>" +
+      "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+      "Pinyin: " + correct.py;
+  }
+
+  document.getElementById("score").innerText =
+    `Điểm: ${score}`;
+
+  // khóa đáp án
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
+}
+
+
+
+function nextQ(){
+  idx++;
+
+  if(idx >= totalQuestions){
+    alert(
+      `🎉 Hoàn thành!\n` +
+      `Điểm của fen: ${score} / ${totalQuestions}`
+    );
+
+    // reset
+    idx = 0;
+    score = 0;
+    shuffle(order);
+
+    document.getElementById("score").innerText = "Điểm: 0";
+  }
+
+  loadQ();
+}
+
+
+
+loadQ();
+</script>
+</body>
+</html>

@@ -1,88 +1,149 @@
-body { font-family: sans-serif; padding: 20px; }
-  /* #question { font-size: 28px; margin-bottom: 15px; font-weight: bold; } */
-.quiz-wrap {
-    width: 50%;         
-    margin: 0 auto;     
+:root {
+  --primary-color: #4F46E5; /* Màu xanh indigo chủ đạo */
+  --primary-hover: #4338CA;
+  --bg-color: #F3F4F6;
+  --card-bg: #FFFFFF;
+  --text-main: #1F2937;
+  --border-color: #E5E7EB;
 }
 
-#question {
-    font-size: 28px;
-    margin-bottom: 15px;
-    font-weight: bold;
+body { 
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  padding: 20px; 
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#options {
-    display: flex;
-    flex-direction: column;
-    width: 100%;  
+/* === HEADER & ĐIỀU HƯỚNG === */
+.header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.header h2 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
 }
 
 .nav-select {
   width: 100%;
-  max-width: 320px;
+  max-width: 250px;
 }
 
 .nav-select select {
   width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 12px;
-  border: 2px solid #bbb;
-  background: #fff;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
 }
 
+.nav-select select:hover {
+  border-color: var(--primary-color);
+}
+
+.duong-ke {
+  width: 100%;
+  max-width: 600px;
+  height: 2px;
+  background-color: var(--border-color);
+  margin-bottom: 30px;
+}
+
+/* === KHUNG BÀI TRẮC NGHIỆM === */
+.quiz-wrap {
+  background: var(--card-bg);
+  width: 100%;        
+  max-width: 600px; 
+  margin: 0 auto; 
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Căn chỉnh tiến độ và điểm số */
+.quiz-wrap > div:first-child {
+  color: #6B7280;
+  font-size: 15px;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+#question {
+  font-size: 36px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+/* === CÁC LỰA CHỌN ĐÁP ÁN === */
+#options {
+  display: flex;
+  flex-direction: column;
+  width: 100%;  
+  gap: 12px;
+}
+
+.option {
+  width: 100%; 
+  padding: 15px 20px;
+  border: 2px solid var(--border-color);
+  background-color: var(--card-bg);
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.option:hover { 
+  background: #EEF2FF; 
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* === KẾT QUẢ & NÚT BẤM === */
+#result { 
+  margin-top: 20px; 
+  font-size: 18px; 
+  font-weight: bold; 
+  text-align: center;
+  min-height: 55px; /* Giữ khung không bị giật khi hiện kết quả */
+}
 
 #next {
-    margin-top: 20px;
-    padding: 12px 25px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: 2px solid #000;
-    background: white;
-    cursor: pointer;
-}
-  .option {
-    width: 100%; 
-    padding: 12px;
-    border: 1px solid #aaa;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border-radius: 6px;
-}
-  .option:hover { background: #f0f0f0; }
-  #result { margin-top: 15px; font-size: 20px; font-weight: bold; }
-  #next {
-    margin-top: 20px;
-    width: 100%;       
-    padding: 12px 25px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: 2px solid #000;
-    background: white;
-    cursor: pointer;
+  margin-top: 20px;
+  width: 100%;       
+  padding: 15px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
- button{
-    padding: 0.5rem 1rem;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0.5rem;
-    background: var(--color-mau2);
-    font-weight: 700;
-    opacity: 1;
-    margin: 2px;
-}
-
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.duong-ke{
-    width: 100%;
-    height: 1px;
-    background-color: black;
-    margin: 10px 0;
+#next:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
 }

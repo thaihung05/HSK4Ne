@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK4</title>
+<link rel="stylesheet" href="CSS/styles.css">
+<link rel="stylesheet" href="CSS/responsive.css">
+</head>
+
+<body>
+<div class="header">
+<h2>Quiz HSK5</h2>
+<div class="nav-select">
+  <select onchange="location = this.value;">
+    <option selected disabled>Chuyển bộ từ vựng…</option>
+    <option value="hsk3.html">HSK 3</option>
+    <option value="index.html">HSK 4 – Quyển 1</option>
+    <option value="hsk4quyen2.html">HSK 4 – Quyển 2</option>
+    <option value="hsk5.html">HSK5</option>
+    <option value="GTHN.html">GTHN</option>
+    <option value="TM.html">Thương mại</option>
+  </select>
+</div>
+</div>
+<div class="duong-ke"></div>
+<div class="quiz-wrap">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="progress" style="font-weight:bold; margin-bottom:5px;">
+        Câu: 0 / 0
+      </div>
+
+      <div id="score" style="font-weight:bold; margin-bottom:10px;">
+        Điểm: 0
+      </div>
+    </div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"评委", "叫", "第一对", "夫妻", "说说", "他们俩", "如何", "恩爱", "妻子", "前几年", "全身", "瘫痪", "医生", "站起来", "可能性", "很小", "别人", "都", "觉得", "丈夫", "会", "跟", "离婚", "也", "想过", "自杀", "但", "一直", "鼓励", "找", "多少", "家", "医院", "并且", "几年如一日", "照顾", "从不", "抱怨", "在…下", "爱护", "努力", "终于", "又", "故事", "十分", "感人", "感动", "随后", "进来", "第二对", "十几年", "婚姻生活", "从来没", "为", "任何事", "红过脸", "吵过架", "相亲相爱", "相敬如宾", "暗暗", "点头", "轮到", "第三对", "却", "很长时间", "不见人", "等", "有些", "不耐烦", "就", "走出来", "看个究竟", "只见", "仍然", "门口", "男人", "女人", "头", "靠", "肩膀", "睡着", "一个", "要", "上前", "喊醒", "伸出", "手指", "做了个", "小声", "动作", "然后", "小心地", "从", "包里", "拿出", "纸笔", "用", "左手", "歪歪扭扭", "写下", "一行字", "递给", "而", "右肩", "脑袋", "靠着", "纸条", "上面", "写着", "别", "出声", "昨晚", "没", "睡好", "续写", "但是", "女士", "得", "叙述", "呀", "那", "参加", "大家", "吃惊", "为了", "不影响", "睡觉", "居然", "放弃", "机会", "还是", "决定", "先", "不催", "而是", "再", "等待", "一段时间", "过了一会儿", "醒", "问", "怎么", "那么", "累", "不好意思", "笑笑", "我家", "住", "一楼", "蚊子", "半夜", "被", "叮醒", "怕", "老婆", "再", "吵醒", "所以", "后半夜", "为她", "赶蚊子", "最后", "结果", "电台", "增加", "两项奖项", "将", "评为", "患难与共", "真正的", "最恩爱夫妻", "给了"
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"píngwěi", "jiào", "dì-yī duì", "fūqī", "shuōshuo", "tāmen liǎ", "rúhé", "ēn’ài", "qīzi", "qián jǐ nián", "quánshēn", "tānhuàn", "yīshēng", "zhàn qǐlái", "kěnéngxìng", "hěn xiǎo", "biérén", "dōu", "juéde", "zhàngfu", "huì", "gēn", "líhūn", "yě", "xiǎngguo", "zìshā", "dàn", "yìzhí", "gǔlì", "zhǎo", "duōshao", "jiā", "yīyuàn", "bìngqiě", "jǐ nián rú yí rì", "zhàogù", "cóng bù", "bàoyuàn", "zài…xià", "àihù", "nǔlì", "zhōngyú", "yòu", "gùshi", "shífēn", "gǎnrén", "gǎndòng", "suíhòu", "jìnlái", "dì-èr duì", "shí jǐ nián", "hūnyīn shēnghuó", "cónglái méi", "wèi", "rènhé shì", "hóngguo liǎn", "chǎoguò jià", "xiāngqīn xiāng’ài", "xiāngjìng rúbīn", "àn’àn", "diǎntóu", "lún dào", "dì-sān duì", "què", "hěn cháng shíjiān", "bú jiàn rén", "děng", "yǒuxiē", "bú nàifán", "jiù", "zǒu chūlái", "kàn ge jiūjìng", "zhǐ jiàn", "réngrán", "ménkǒu", "nánrén", "nǚrén", "tóu", "kào", "jiānbǎng", "shuìzháo", "yí ge", "yào", "shàngqián", "hǎn xǐng", "shēnchū", "shǒuzhǐ", "zuò le ge", "xiǎoshēng", "dòngzuò", "ránhòu", "xiǎoxīn de", "cóng", "bāo lǐ", "ná chū", "zhǐbǐ", "yòng", "zuǒshǒu", "wāiwāiniǔniǔ", "xiěxià", "yì háng zì", "dì gěi", "ér", "yòujiān", "nǎodai", "kào zhe", "zhǐtiáo", "shàngmiàn", "xiězhe", "bié", "chūshēng", "zuówǎn", "méi", "shuì hǎo", "xùxiě", "dànshì", "nǚshì", "děi", "xùshù", "ya", "nà", "cānjiā", "dàjiā", "chījīng", "wèile", "bù yǐngxiǎng", "shuìjiào", "jūrán", "fàngqì", "jīhuì", "háishì", "juédìng", "xiān", "bù cuī", "érshì", "zài", "děngdài", "yí duàn shíjiān", "guò le yíhuìr", "xǐng", "wèn", "zěnme", "nàme", "lèi", "bù hǎoyìsi", "xiàoxiao", "wǒ jiā", "zhù", "yì lóu", "wénzi", "bànyè", "bèi", "dīng xǐng", "pà", "lǎopo", "zài", "chǎo xǐng", "suǒyǐ", "hòubànyè", "wèi tā", "gǎn wénzi", "zuìhòu", "jiéguǒ", "diàntái", "zēngjiā", "liǎng xiàng jiǎngxiàng", "jiāng", "píng wéi", "huànnàn yǔgòng", "zhēnzhèng de", "zuì ēn’ài fūqī", "gěi le"
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"ban giám khảo", "yêu cầu, bảo", "cặp thứ nhất", "vợ chồng", "nói thử, kể sơ", "hai người họ", "như thế nào", "yêu thương mặn nồng", "người vợ", "vài năm trước", "toàn thân", "liệt", "bác sĩ", "đứng dậy", "khả năng", "rất nhỏ", "người khác", "đều", "cảm thấy", "chồng", "sẽ", "với", "ly hôn", "cũng", "từng nghĩ", "tự tử", "nhưng", "luôn luôn", "động viên", "tìm", "bao nhiêu (nhiều)", "lượng từ", "bệnh viện", "hơn nữa", "nhiều năm như một", "chăm sóc", "không bao giờ", "than phiền", "nhờ/dưới", "yêu thương bảo vệ", "nỗ lực", "cuối cùng", "lại", "câu chuyện", "vô cùng", "cảm động", "xúc động", "sau đó", "đi vào", "cặp thứ hai", "hơn mười năm", "đời sống hôn nhân", "chưa bao giờ", "vì", "bất cứ chuyện gì", "từng cãi vã", "từng cãi nhau", "yêu thương nhau", "kính trọng nhau", "thầm", "gật đầu", "đến lượt", "cặp thứ ba", "vậy mà", "rất lâu", "không thấy người", "đợi", "hơi", "sốt ruột", "bèn", "đi ra", "xem cho rõ", "chỉ thấy", "vẫn", "cửa", "người đàn ông", "người phụ nữ", "đầu", "tựa", "vai", "ngủ thiếp", "một", "định", "bước lên", "gọi dậy", "đưa ra", "ngón tay", "làm một cái", "nói nhỏ", "động tác", "rồi", "cẩn thận", "từ", "trong túi", "lấy ra", "giấy bút", "dùng", "tay trái", "nguệch ngoạc", "viết xuống", "một dòng chữ", "đưa cho", "còn", "vai phải", "đầu", "đang tựa", "mẩu giấy", "phía trên", "ghi", "đừng", "phát ra tiếng", "tối qua", "không", "ngủ ngon", "viết tiếp", "nhưng", "quý bà", "phải", "kể lại", "trợ từ", "vậy thì", "tham gia", "mọi người", "kinh ngạc", "để", "không ảnh hưởng", "ngủ", "vậy mà", "từ bỏ", "cơ hội", "vẫn", "quyết định", "trước", "không thúc", "mà là", "lại", "đợi", "một khoảng thời gian", "một lát sau", "tỉnh", "hỏi", "sao", "như vậy", "mệt", "ngại", "cười nhẹ", "nhà tôi", "ở", "tầng 1", "muỗi", "nửa đêm", "bị", "đốt tỉnh", "sợ", "vợ", "lại", "làm tỉnh", "vì vậy", "nửa sau đêm", "vì cô ấy", "đuổi muỗi", "cuối cùng", "kết quả", "đài phát thanh", "tăng thêm", "hai giải", "đem", "trao danh hiệu", "hoạn nạn có nhau", "thực sự", "vợ chồng yêu nhất", "trao cho"
+
+];
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  console.info(words.length)
+  console.info(pinyin.length)
+  console.info(meaning.length)
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+let score = 0;
+const totalQuestions = vocab.length;
+
+function loadQ(){
+  document.getElementById("progress").innerText =
+  `Câu: ${idx + 1} / ${totalQuestions}`;
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    score++;
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+      "❌ Sai rồi.<br>" +
+      "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+      "Pinyin: " + correct.py;
+  }
+
+  document.getElementById("score").innerText =
+    `Điểm: ${score}`;
+
+  // khóa đáp án
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
+}
+
+
+
+function nextQ(){
+  idx++;
+
+  if(idx >= totalQuestions){
+    alert(
+      `🎉 Hoàn thành!\n` +
+      `Điểm của fen: ${score} / ${totalQuestions}`
+    );
+
+    // reset
+    idx = 0;
+    score = 0;
+    shuffle(order);
+
+    document.getElementById("score").innerText = "Điểm: 0";
+  }
+
+  loadQ();
+}
+
+
+
+loadQ();
+</script>
+</body>
+</html>

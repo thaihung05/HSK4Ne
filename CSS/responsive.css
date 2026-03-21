@@ -2,71 +2,76 @@
    📱 MOBILE ≤ 480px
    ========================================= */
 @media (max-width: 480px) {
-
-    h2 {
-        font-size: 15px !important;
-        margin-right: 50px;
+    body {
+        padding: 10px; /* Giảm khoảng trống hai bên màn hình */
     }
 
-    .btn-chuyen {
-        margin: 0 auto;
-        width: fit-content;
+    .header {
+        flex-direction: column; /* Đẩy thanh chọn xuống dưới tiêu đề */
+        gap: 12px;
     }
 
-    .btn-chuyen-text{
-        font-size: 15px;
+    .header h2 {
+        font-size: 22px;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    .nav-select {
+        max-width: 100%; /* Thanh chọn dàn đều màn hình điện thoại */
     }
 
     .quiz-wrap {
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 10px !important;
+        padding: 20px 15px; /* Thu gọn viền trong khung trắc nghiệm */
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     }
 
     #question {
-        font-size: 22px !important;
+        font-size: 26px; /* Chữ nhỏ lại xíu cho khỏi rớt dòng */
+        margin-bottom: 15px;
     }
 
     .option {
-        width: 80% !important;
-        font-size: 16px !important;
-        margin: 8px 0 !important;
-        padding: 14px !important;
+        font-size: 15px;
+        padding: 12px 15px;
+        margin-bottom: 8px; /* Tách nhẹ các đáp án */
+    }
+
+    #result {
+        font-size: 16px;
+        min-height: 50px;
     }
 
     #next {
-        width: 40% !important;
-        font-size: 16px !important;
-        padding: 14px !important;
-        margin: 8px 0 !important;
-        left: 25%;
+        font-size: 16px;
+        padding: 12px;
+        margin-top: 15px;
     }
 }
-
 
 /* =========================================
    📱📱 TABLET 481px – 768px
    ========================================= */
 @media (min-width: 481px) and (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .header {
+        gap: 15px;
+    }
 
     .quiz-wrap {
-        width: 80% !important;
-        margin: 0 auto !important;
+        padding: 25px 20px;
     }
 
     #question {
-        font-size: 24px !important;
+        font-size: 30px;
     }
 
     .option {
-        width: 100% !important;
-        font-size: 18px !important;
-        padding: 14px !important;
-    }
-
-    #next {
-        width: 100% !important;
-        font-size: 18px !important;
-        padding: 14px !important;
+        font-size: 16px;
+        padding: 14px;
     }
 }

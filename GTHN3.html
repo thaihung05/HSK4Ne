@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK4</title>
+<link rel="stylesheet" href="CSS/styles.css">
+<link rel="stylesheet" href="CSS/responsive.css">
+</head>
+
+<body>
+<div class="header">
+<h2>GTHN 3</h2>
+<div class="nav-select">
+  <select onchange="location = this.value;">
+    <option selected disabled>Chuyển bộ từ vựng…</option>
+    <option value="index.html">HSK</option>
+    <option value="TM.html">Thương mại</option>
+    <option value="GTHN.html">GTHN</option>
+    <option value="GTHN2.html">GTHN 2</option>
+  </select>
+</div>
+</div>
+<div class="duong-ke"></div>
+<div class="quiz-wrap">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="progress" style="font-weight:bold; margin-bottom:5px;">
+        Câu: 0 / 0
+      </div>
+
+      <div id="score" style="font-weight:bold; margin-bottom:10px;">
+        Điểm: 0
+      </div>
+    </div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"阿姨", "哎", "哎呀", "爱", "爱人", "安排", "按摩", "白薯", "白天", "办法", "办事", "半天", "帮", "帮助", "棒", "包(儿)", "鼻子", "比", "比", "比赛", "必须", "避暑", "变", "变化", "表", "别", "病人", "不但...而且", "不过", "不一定", "才", "菜", "层", "曾经", "差不多", "产生", "肠炎", "车站", "成", "成", "成绩", "承认", "城市", "程度", "迟到", "出", "出国", "出来", "出去", "出土", "厨房", "春(天)", "词", "辞职", "从来", "Chữ Hán", "答", "打(电话)", "打工", "打开", "打鱼", "打针", "大便", "大使", "大使馆", "大衣", "大约", "导游", "道", "得", "得", "地", "地铁", "第", "点心", "电池", "丟", "丟三落四", "冬(天)", "堵车", "肚子", "度", "队", "对了", "饿", "发财", "发狂", "饭店", "方便", "方法", "房子", "房租", "放", "分", "风", "风光", "风景", "父母", "父亲", "附近", "该", "改革", "干净", "干燥", "赶", "感觉", "感谢", "干", "干什么", "钢琴", "高", "高铁", "高血压", "歌词", "歌曲", "更", "公共汽车", "功课", "古典", "故事", "故乡", "刮风", "关", "关机", "光", "国家", "过来", "过去", "过去", "过", "还", "还是", "好", "好处", "好好儿", "好事", "好听", "合上", "河", "红叶", "后", "后天", "互相", "护照", "滑冰", "滑雪", "化验", "画册", "坏", "坏处", "坏事", "还", "环境", "回信", "会话", "活动", "机会", "极了", "记", "季", "季节", "寂寞", "家", "家庭", "家乡", "假期", "捡", "检查", "见", "建筑", "将来", "交", "交通", "交响乐", "教学", "接", "结果", "结婚", "锦标赛", "进去", "经常", "经过", "经营", "精神", "句子", "开", "开(药)", "开车", "开放", "开会", "开机", "看见", "考", "考试", "烤", "烤鸭", "靠", "可", "可是", "客厅", "课间", "口袋", "哭", "苦", "块", "拉", "拉肚子", "落", "啦", "老", "老板", "老外", "了", "了", "冷", "离婚", "礼堂", "历史", "厉害", "利用", "练", "凉快", "流行", "旅馆", "旅行社", "旅游", "乱", "麻烦", "马马虎虎", "马上", "嘛", "脉", "满意", "慢", "慢性病", "迷", "面积", "民歌", "名曲", "摸", "母亲", "那样", "难过", "年轻", "念", "牛奶", "牛肉", "暖和", "暖气", "旁边", "陪", "佩服", "片", "漂亮", "平(方)米", "完", "忘", "为了", "未婚夫", "未婚妻", "喂", "文物", "问好", "卧室", "屋子", "午觉", "舞会", "希望", "习惯", "细", "下", "下雪", "下雨", "下载", "夏(天)", "现场", "现代", "响", "向", "像", "消化", "小便", "小提琴", "笑", "效果", "协奏曲", "辛苦", "需要", "雪", "呀", "延长", "研究", "研究生", "研讨", "研讨会", "眼睛", "演奏", "阳光", "要求", "遥远", "药方", "要是", "也许", "叶", "页", "夜", "一...就...", "一切", "一样", "已经", "一般", "营业", "赢", "尤其", "油腻", "游泳", "有的", "有名", "有些", "有意思", "又", "鱼", "预报", "原来", "暂停", "糟糕", "增加", "扎针", "展览", "展览馆", "站", "着", "着急", "照相", "照相机", "这样", "着呢", "针", "针灸", "真", "正常", "只是", "治", "中餐", "中成药", "中学", "中医", "钟头", "周末", "周围", "住", "住院", "注意", "祝贺", "准", "自由", "租", "组织", "最", "最后", "作业", "座位", "安娜", "长城", "丹尼丝", "敦煌", "故宫", "哈尔滨", "海南岛", "《黄河》", "孔子", "《梁祝》", "欧洲", "上海", "深圳", "世界杯", "台湾", "泰山", "西安", "香港", "颐和园", "赵"
+
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"āyí", "āi", "āiyā", "ài", "àiren", "ānpái", "ànmó", "báishǔ", "báitiān", "bànfǎ", "bàn shì", "bàntiān", "bāng", "bāngzhù", "bàng", "bāor", "bízi", "bǐ", "bǐ", "bǐsài", "bìxū", "bì shǔ", "biàn", "biànhuà", "biǎo", "bié", "bìngrén", "búdàn... érqiě", "búguò", "bù yídìng", "cái", "cài", "céng", "céngjīng", "chàbuduō", "chǎnshēng", "chángyán", "chēzhàn", "chéng", "chéng", "chéngjì", "chéngrèn", "chéngshì", "chéngdù", "chídào", "chū", "chū guó", "chūlai", "chūqu", "chū tǔ", "chúfáng", "chūn (tiān)", "cí", "cí zhí", "cónglái", "Pinyin", "dá", "dǎ (diànhuà)", "dǎ gōng", "dǎ kāi", "dǎ yú", "dǎ zhēn", "dàbiàn", "dàshǐ", "dàshǐguǎn", "dàyī", "dàyuē", "dǎoyóu", "dào", "dé", "dé", "de", "dìtiě", "dì", "diǎnxin", "diànchí", "diū", "diūsān-làsì", "dōng (tiān)", "dǔ chē", "dùzi", "dù", "duì", "duìle", "è", "fā cái", "fā kuáng", "fàndiàn", "fāngbiàn", "fāngfǎ", "fángzi", "fángzū", "fàng", "fēn", "fēng", "fēngguāng", "fēngjǐng", "fùmǔ", "fùqin", "fùjìn", "gāi", "gǎigé", "gānjìng", "gānzào", "gǎn", "gǎnjué", "gǎnxiè", "gàn", "gàn shénme", "gāngqín", "gāo", "gāotiě", "gāoxuèyā", "gēcí", "gēqǔ", "gèng", "gōnggòng qìchē", "gōngkè", "gǔdiǎn", "gùshi", "gùxiāng", "guā fēng", "guān", "guānjī", "guāng", "guójiā", "guòlai", "guòqù", "guòqu", "guo", "hái", "háishi", "hǎo", "hǎochù", "hǎohāor", "hǎoshì", "hǎotīng", "héshang", "hé", "hóngyè", "hòu", "hòutiān", "hùxiāng", "hùzhào", "huá bīng", "huá xuě", "huàyàn", "huàcè", "huài", "huàichù", "huàishì", "huán", "huánjìng", "huí xìn", "huìhuà", "huódòng", "jīhuì", "jíle", "jì", "jì", "jìjié", "jìmò", "jiā", "jiātíng", "jiāxiāng", "jiàqī", "jiǎn", "jiǎnchá", "jiàn", "jiànzhù", "jiānglái", "jiāo", "jiāotōng", "jiāoxiǎngyuè", "jiàoxué", "jiē", "jiéguǒ", "jié hūn", "jǐnbiāosài", "jìnqu", "jīngcháng", "jīngguò", "jīngyíng", "jīngshen", "jùzi", "kāi", "kāi (yào)", "kāi chē", "kāifàng", "kāi huì", "kāi jī", "kàn jiàn", "kǎo", "kǎo shì", "kǎo", "kǎoyā", "kào", "kě", "kěshì", "kètīng", "kèjiān", "kǒudai", "kū", "kǔ", "kuài", "lā", "lā dùzi", "là", "la", "lǎo", "lǎobǎn", "lǎowài", "le", "le", "lěng", "lí hūn", "lǐtáng", "lìshǐ", "lìhai", "lìyòng", "liàn", "liángkuai", "liúxíng", "lǚguǎn", "lǚxíngshè", "lǚyóu", "luàn", "máfan", "mǎmǎhūhū", "mǎshàng", "ma", "mài", "mǎnyì", "màn", "mànxìngbìng", "mí", "miànjī", "míngē", "míngqǔ", "mō", "mǔqin", "nàyàng", "nánguò", "niánqīng", "niàn", "niúnǎi", "niúròu", "nuǎnhuo", "nuǎnqì", "pángbiān", "péi", "pèifú", "piàn", "piàoliang", "píng(fāng)mǐ", "wán", "wàng", "wèile", "wèihūnfū", "wèihūnqī", "wèi", "wénwù", "wèn hǎo", "wòshì", "wūzi", "wǔjiào", "wǔhuì", "xīwàng", "xíguàn", "xì", "xià", "xià xuě", "xià yǔ", "xiàzài", "xià (tiān)", "xiànchǎng", "xiàndài", "xiǎng", "xiàng", "xiàng", "xiāohuà", "xiǎobiàn", "xiǎotíqín", "xiào", "xiàoguǒ", "xiézòuqǔ", "xīnkǔ", "xūyào", "xuě", "ya", "yáncháng", "yánjiū", "yánjiūshēng", "yántǎo", "yántǎohuì", "yǎnjing", "yǎnzòu", "yángguāng", "yāoqiú", "yáoyuǎn", "yàofāng", "yàoshi", "yěxǔ", "yè", "yè", "yè", "yī...jiù...", "yíqiè", "yíyàng", "yǐjīng", "yìbān", "yíngyè", "yíng", "yóuqí", "yóunì", "yóu yǒng", "yǒude", "yǒumíng", "yǒuxiē", "yǒu yìsi", "yòu", "yú", "yùbào", "yuánlái", "zántíng", "zāogāo", "zēngjiā", "zhā zhēn", "zhǎnlǎn", "zhǎnlǎn guǎn", "zhàn", "zháo", "zháo jí", "zhào xiàng", "zhàoxiàngjī", "zhèyàng", "zhene", "zhēn", "zhēnjiǔ", "zhēn", "zhèngcháng", "zhǐshì", "zhì", "zhōngcān", "zhōngchéngyào", "zhōngxué", "zhōngyī", "zhōngtóu", "zhōumò", "zhōuwéi", "zhù", "zhù yuàn", "zhùyì", "zhùhè", "zhǔn", "zìyóu", "zū", "zǔzhī", "zuì", "zuìhòu", "zuòyè", "zuòwèi", "Ānnà", "Chángchéng", "Dānnísī", "Dūnhuáng", "Gùgōng", "Hā'ěrbīn", "Hǎinán Dǎo", "《Huáng Hé》", "Kǒngzǐ", "《Liáng-Zhù》", "Ōuzhōu", "Shànghǎi", "Shēnzhèn", "Shìjiè Bēi", "Táiwān", "Tài Shān", "Xī'ān", "Xiānggǎng", "Yíhé Yuán", "Zhào"
+
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"Dì","Tại sao", "Ối", "giống", "vợ chồng", "sắp xếp", "mát xa", "khoai lang", "ban ngày", "đường", "công việc", "lâu rồi", "giúp đỡ", "giúp đỡ", "Tuyệt", "Bao (hoặc Bao)", "mũi", "So sánh", "So sánh", "Cuộc thi", "phải", "Kỳ nghỉ hè", "Thay đổi", "thay đổi", "bề mặt", "Đừng", "kiên nhẫn", "Không chỉ... mà còn", "Nhưng", "không chắc chắn", "tài năng", "rau quả", "lớp", "một lần", "hầu hết", "sản xuất", "viêm ruột", "ga tàu", "trở nên", "trở nên", "điểm", "thừa nhận", "Thành phố", "bằng cấp", "đến muộn", "ngoài", "Đi nước ngoài", "đi ra ngoài", "đi ra ngoài", "Đã khai quật", "phòng bếp", "mùa xuân)", "từ", "Từ chức", "Không bao giờ", "Hán", "trả lời", "(Gọi điện)", "làm việc để kiếm sống", "Mở", "Câu cá", "tiêm", "phân", "đại sứ", "đại sứ quán", "áo khoác ngoài", "Về", "hướng dẫn viên du lịch", "đường", "phải", "phải", "đất", "tàu điện ngầm", "KHÔNG.", "món tráng miệng", "Ắc quy", "Mất", "Hay quên", "mùa đông)", "Tắc đường", "bụng", "Tiêu", "Đội", "Nhân tiện", "Đói bụng", "Trở nên giàu có", "Sự điên rồ", "Nhà hàng", "thuận lợi", "phương pháp", "căn nhà", "thuê", "đặt", "điểm", "gió", "Phong cảnh", "phong cảnh", "cha mẹ", "Bố", "gần đó", "Nên", "cải cách", "lau dọn", "khô", "cây bấc", "Cảm thấy", "tri ân", "Khô", "Phải làm sao đây?", "đàn piano", "cao", "đường sắt cao tốc", "tăng huyết áp", "lời bài hát", "bài hát", "Thậm chí", "xe buýt", "bài tập về nhà", "cổ điển", "câu chuyện", "trang chủ", "Gió", "đóng", "Tắt nguồn", "Ánh sáng", "Quốc gia", "đến đây", "quá khứ", "quá khứ", "Vượt qua", "trở lại", "vẫn", "Tốt", "lợi ích", "Đồng ý", "Điều tốt", "Nghe hay đấy.", "Đóng", "dòng sông", "Lá đỏ", "mặt sau", "ngày kia", "nhau", "hộ chiếu", "trượt băng", "trượt tuyết", "xét nghiệm", "Album ảnh", "xấu", "làm hại", "điều tồi tệ", "trở lại", "môi trường", "hồi đáp", "cuộc hội thoại", "Hoạt động", "Cơ hội", "Xuất sắc", "nhớ", "mùa", "mùa", "cô đơn", "Trang chủ", "gia đình", "quê hương", "ngày lễ", "Nhặt lên", "nghiên cứu", "Nhìn thấy", "ngành kiến ​​​​trúc", "tương lai", "chi trả", "vận tải", "bản giao hưởng", "giảng dạy", "nắm lấy", "kết quả", "kết hôn", "giải vô địch", "Đi vào", "thường", "đi qua", "Việc kinh doanh", "Tinh thần", "câu", "mở", "Đơn thuốc (thuốc)", "lái xe", "mở", "Cuộc họp", "Bật nguồn", "nhìn thấy", "Bài kiểm tra", "làm bài kiểm tra", "nướng", "Vịt quay", "Phụ thuộc vào", "Có thể", "Nhưng", "phòng khách", "phá vỡ", "túi", "khóc", "vị đắng", "cái", "sự lôi kéo", "Bị tiêu chảy", "ngã", "La", "cũ", "ông chủ", "người nước ngoài", "Đã", "Đã", "lạnh lẽo", "ly hôn", "sảnh", "lịch sử", "sắc", "sử dụng", "luyện tập", "Mát mẻ", "Sự phổ biến", "ký túc xá", "đại lý du lịch", "du lịch", "sự hỗn loạn", "rắc rối", "Tạm được", "ngay lập tức", "Tốt", "xung", "thỏa mãn", "chậm", "mãn tính", "cái quạt", "khu vực", "bài hát dân ca", "Nhạc nổi tiếng", "chạm", "Mẹ", "Cái đó", "buồn", "trẻ", "đọc", "sữa", "thịt bò", "ấm", "Sưởi ấm", "bên cạnh", "đi kèm", "ngưỡng mộ", "cái", "đẹp", "mét vuông", "qua", "quên", "vì", "hôn phu", "hôn thê", "Xin chào", "di tích văn hóa", "chào hỏi", "phòng ngủ", "phòng", "Giấc ngủ trưa", "vũ hội", "mong", "Thói quen", "gầy", "Xuống", "tuyết", "cơn mưa", "tải xuống", "mùa hè)", "tại chỗ", "hiện đại", "nhẫn", "Đối với", "hình ảnh", "Tiêu hóa", "đi tiểu", "vĩ cầm", "cười", "Tác dụng", "buổi hòa nhạc", "Cứng", "nhu cầu", "Tuyết", "à", "mở rộng", "Nghiên cứu", "sau đại học", "hội thảo", "hội thảo", "Mắt", "chơi", "Ánh sáng mặt trời", "Yêu cầu", "xa xôi", "đơn thuốc", "nếu như", "Có lẽ", "lá cây", "Trang", "đêm", "Càng sớm càng...", "mọi thứ", "Như nhau", "đã", "nói chung là", "Việc kinh doanh", "thắng", "đặc biệt", "dầu mỡ", "bơi", "một số", "nổi tiếng", "một số", "hấp dẫn", "lại", "cá", "dự báo", "hóa ra là", "tạm dừng", "Ối", "Tăng", "Châm cứu", "triển lãm", "Phòng triển lãm", "đứng", "Mặc", "vội vàng", "Nhiếp ảnh", "máy ảnh", "Vì thế", "Nó đây rồi.", "Cây kim", "Châm cứu", "thực tế", "Bình thường", "chỉ một", "luật lệ", "Đồ ăn Trung Quốc", "Y học cổ truyền Trung Quốc", "Trường trung học cơ sở", "Y học cổ truyền Trung Quốc", "giờ", "ngày cuối tuần", "xung quanh", "sống", "Nhập viện", "Để ý", "chúc mừng", "cho phép", "miễn phí", "thuê", "tổ chức", "hầu hết", "cuối cùng", "Hoạt động", "ghế", "Anna", "Vạn Lý Trường Thành", "Denise", "Dunhuang", "Tử Cấm Thành", "Cáp Nhĩ Tân", "Đảo Hải Nam", "Sông Hoàng Hà", "Khổng Tử", "Những người yêu bướm", "Châu Âu", "Thượng Hải", "Thâm Quyến", "Giải vô địch thế giới", "Đài Loan", "Núi Thái", "Tây An", "Hồng Kông", "Cung điện mùa hè", "Triệu"
+
+];
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  console.info(words.length)
+  console.info(pinyin.length)
+  console.info(meaning.length)
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+let score = 0;
+const totalQuestions = vocab.length;
+
+function loadQ(){
+  document.getElementById("progress").innerText =
+  `Câu: ${idx + 1} / ${totalQuestions}`;
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    score++;
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+      "❌ Sai rồi.<br>" +
+      "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+      "Pinyin: " + correct.py;
+  }
+
+  document.getElementById("score").innerText =
+    `Điểm: ${score}`;
+
+  // khóa đáp án
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
+}
+
+
+
+function nextQ(){
+  idx++;
+
+  if(idx >= totalQuestions){
+    alert(
+      `🎉 Hoàn thành!\n` +
+      `Điểm của fen: ${score} / ${totalQuestions}`
+    );
+
+    // reset
+    idx = 0;
+    score = 0;
+    shuffle(order);
+
+    document.getElementById("score").innerText = "Điểm: 0";
+  }
+
+  loadQ();
+}
+
+
+
+loadQ();
+</script>
+</body>
+</html>
