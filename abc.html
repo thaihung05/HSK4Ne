@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK4</title>
+<link rel="stylesheet" href="CSS/styles.css">
+<link rel="stylesheet" href="CSS/responsive.css">
+</head>
+
+<body>
+<div class="header">
+<h2>File thêm</h2>
+<div class="nav-select">
+  <select onchange="location = this.value;">
+    <option selected disabled>Chuyển bộ từ vựng…</option>
+    <option value="index.html">HSK</option>
+    <option value="GTHN.html">GTHN</option>
+    <option value="TM.html">Thương mại</option>
+  </select>
+</div>
+</div>
+<div class="duong-ke"></div>
+<div class="quiz-wrap">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="progress" style="font-weight:bold; margin-bottom:5px;">
+        Câu: 0 / 0
+      </div>
+
+      <div id="score" style="font-weight:bold; margin-bottom:10px;">
+        Điểm: 0
+      </div>
+    </div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+    <button id="next" onclick="nextQ()">Tiếp tục</button>
+</div>
+
+
+<script>
+// ===============================================================
+// 1) LIST TỪ HÁN TỰ
+const words = [
+"接",
+"新华",
+"合并",
+"转告",
+"前程",
+"组织",
+"全体",
+"丝绸",
+"招商银行",
+"信贷科",
+"科长",
+"考察",
+"委婉",
+"贸易",
+"洽谈会",
+"财务",
+"季度",
+"财政",
+"预算",
+"来访",
+"太阳",
+"广告",
+"例会",
+"生产线",
+"促销员",
+"记者",
+"招待会",
+"及",
+"新闻发布会",
+"考察",
+"洽谈",
+"合作",
+"项目",
+"对照",
+"考察",
+"赔偿",
+"日程表",
+"据此",
+"汇报",
+"展览",
+"天津工厂",
+"赴天津考察",
+"首都",
+"五洲大酒店",
+"手续",
+"多功能厅",
+"领导",
+"设宴",
+"集团",
+"规模",
+"欣赏",
+"专场音乐会",
+"自助",
+"电子",
+"元件",
+"分组",
+"都市",
+"乡村",
+"休闲",
+"俱乐部",
+"娱乐",
+"乘车",
+"市内景点",
+"观光",
+"自由",
+"退房",
+];
+
+
+// 2) LIST PINYIN
+const pinyin = [
+"jiē",
+"xīnhuá",
+"hébìng",
+"zhuǎngào",
+"qiánchéng",
+"zǔzhī",
+"quántǐ",
+"sīchóu",
+"zhāoshāng yínháng",
+"xìndài kē",
+"kēzhǎng",
+"kǎochá",
+"wěiwǎn",
+"màoyì",
+"qiàtán huì",
+"cáiwù",
+"jìdù",
+"cáizhèng",
+"yùsuàn",
+"láifǎng",
+"tàiyáng",
+"guǎnggào",
+"lìhuì",
+"shēngchǎn xiàn",
+"cùxiāo yuán",
+"jìzhě",
+"zhāodài huì",
+"jí",
+"xīnwén fābù huì",
+"kǎochá",
+"qiàtán",
+"hézuò",
+"xiàngmù",
+"duìzhào",
+"kǎochá",
+"péicháng",
+"rìchéngbiǎo",
+"jùcǐ",
+"huìbào",
+"zhǎnlǎn",
+"tiānjīn gōngchǎng",
+"fù tiānjīn kǎochá",
+"shǒudū",
+"wǔzhōu dà jiǔdiàn",
+"shǒuxù",
+"duōgōngnéng tīng",
+"lǐngdǎo",
+"shèyàn",
+"jítuán",
+"guīmó",
+"xīnshǎng",
+"zhuānchǎng yīnyuèhuì",
+"zìzhù",
+"diànzǐ",
+"yuánjiàn",
+"fēnzǔ",
+"dūshì",
+"xiāngcūn",
+"xiūxián",
+"jùlèbù",
+"yúlè",
+"chéng chē",
+"shìnèi jǐngdiǎn",
+"guānguāng",
+"zìyóu",
+"tuìfáng",
+];
+
+
+// 3) LIST NGHĨA TIẾNG VIỆT
+const meaning = [
+"nghe máy / nhấc máy",
+"Tân Hoa",
+"sáp nhập",
+"chuyển lời / báo lại",
+"Cty Tiền Trình",
+"tổ chức",
+"toàn thể",
+"lụa",
+"NH TMCP TQ",
+"phòng tín dụng",
+"trưởng phòng",
+"khảo sát",
+"1 cách khéo léo / uyển chuyển",
+"giao dịch",
+"Cuộc họp đàm phán",
+"tài chính",
+"quý",
+"tài chính",
+"ngân sách",
+"khách tham quan",
+"Mặt trời",
+"quảng cáo",
+"cuộc họp định kỳ",
+"Dây chuyền SX",
+"NV bán hàng",
+"nhà báo",
+"thu nhận / tiệc chiêu đãi",
+"và",
+"họp báo",
+"khảo sát",
+"đàm phán",
+"hợp tác",
+"dự án",
+"đối chiếu",
+"cuộc điều tra / khảo sát",
+"bồi thường",
+"lịch trình",
+"theo đó",
+"báo cáo",
+"triển lãm",
+"nhà máy Thiên Tân",
+"Chuyến thăm Thiên Tân",
+"Thủ đô",
+"KS Ngũ Châu",
+"thủ tục",
+"phòng đa năng",
+"lãnh đạo",
+"mở tiệc",
+"tập đoàn",
+"quy mô",
+"thưởng thức",
+"buổi hoà nhạc chuyên đề",
+"buffet",
+"điện tử",
+"linh kiện",
+"theo nhóm",
+"TP (Thành phố)",
+"nông thôn",
+"tơi thảnh thơi / thư giãn",
+"CLB (Câu lạc bộ)",
+"sự giải trí",
+"đi xe",
+"địa điểm du lịch trong TP",
+"ngắm cảnh / tham quan",
+"tự do",
+"trả phòng",
+];
+
+
+// ===============================================================
+// Tạo danh sách object {w, py, vi}
+if(words.length !== pinyin.length || words.length !== meaning.length){
+  console.info(words.length)
+  console.info(pinyin.length)
+  console.info(meaning.length)
+  alert("❌ 3 list không bằng nhau!");
+}
+
+const vocab = words.map((w,i)=> ({
+  w,
+  py: pinyin[i],
+  vi: meaning[i]
+}));
+
+// ===============================================================
+// QUIZ ENGINE
+
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+let order = [...Array(vocab.length).keys()];
+shuffle(order);
+let idx = 0;
+let score = 0;
+const totalQuestions = vocab.length;
+
+function loadQ(){
+  document.getElementById("progress").innerText =
+  `Câu: ${idx + 1} / ${totalQuestions}`;
+  const q = vocab[ order[idx] ];
+
+  document.getElementById("question").innerText = "Từ: " + q.w;
+  const box = document.getElementById("options");
+  box.innerHTML = "";
+  document.getElementById("result").innerHTML = "";
+
+  // tạo đáp án sai
+  let wrong = vocab.filter(v => v.w !== q.w);
+  shuffle(wrong);
+  wrong = wrong.slice(0,3);
+
+  const choices = [q, ...wrong];
+  shuffle(choices);
+
+  choices.forEach(c=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = c.vi;
+    div.onclick = ()=> selectAns(c, q, div);
+    box.appendChild(div);
+  });
+}
+
+function selectAns(chosen, correct, box){
+  const res = document.getElementById("result");
+
+  if(chosen.w === correct.w){
+    score++;
+    box.style.background = "#c2f7c2";
+    res.innerHTML = "✔ Đúng!<br>Pinyin: " + correct.py;
+  } else {
+    box.style.background = "#ffb3b3";
+    res.innerHTML =
+      "❌ Sai rồi.<br>" +
+      "Đáp án đúng: <b>" + correct.vi + "</b><br>" +
+      "Pinyin: " + correct.py;
+  }
+
+  document.getElementById("score").innerText =
+    `Điểm: ${score}`;
+
+  // khóa đáp án
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
+}
+
+
+
+function nextQ(){
+  idx++;
+
+  if(idx >= totalQuestions){
+    alert(
+      `🎉 Hoàn thành!\n` +
+      `Điểm của fen: ${score} / ${totalQuestions}`
+    );
+
+    // reset
+    idx = 0;
+    score = 0;
+    shuffle(order);
+
+    document.getElementById("score").innerText = "Điểm: 0";
+  }
+
+  loadQ();
+}
+
+
+
+loadQ();
+</script>
+</body>
+</html>
